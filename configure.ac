@@ -44,7 +44,7 @@ AM_MAINTAINER_MODE
 
 AM_SILENT_RULES([yes])
 
-AC_CONFIG_SRCDIR([libelf/libelf.h])
+AC_CONFIG_SRCDIR([libelf/libelf.h.in])
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_HEADERS([config.h])
 
@@ -83,6 +83,29 @@ AC_PROG_CC
 AC_PROG_RANLIB
 AC_PROG_YACC
 AM_PROG_LEX
+
+gl_EARLY
+
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([dnl
+#include <sys/types.h>
+static uid_t x;
+])], uid_t=uid_t, uid_t=int32_t)
+AC_SUBST(UID_T, $uid_t)
+
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([dnl
+#include <sys/types.h>
+static gid_t x;
+])], gid_t=gid_t, gid_t=int32_t)
+AC_SUBST(GID_T, $gid_t)
+
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([dnl
+#include <sys/types.h>
+static mode_t x;
+])], mode_t=mode_t, mode_t=int32_t)
+AC_SUBST(MODE_T, $mode_t)
+
+gl_INIT
+
 # Only available since automake 1.12
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 AC_CHECK_TOOL([READELF], [readelf])
@@ -121,13 +144,21 @@ CFLAGS="$old_CFLAGS"])
 AS_IF([test "x$ac_cv_c99" != xyes],
       AC_MSG_ERROR([gcc with GNU99 support required]))
 
+AC_CACHE_CHECK([the output format of the linker is ELF], ac_cv_elf,[dnl
+case `$CC -Wl,-print-output-format -nodefaultlibs -nostartfiles` in
+ elf*) ac_cv_elf=yes ;;
+ *)   ac_cv_elf=no ;;
+esac])
+AM_CONDITIONAL(ELF, test "$ac_cv_elf" = yes)
+
 AC_CACHE_CHECK([for __thread support], ac_cv_tls, [dnl
 # Use the same flags that we use for our DSOs, so the test is representative.
 # Some old compiler/linker/libc combinations fail some ways and not others.
 save_CFLAGS="$CFLAGS"
 save_LDFLAGS="$LDFLAGS"
 CFLAGS="-fPIC $CFLAGS"
-LDFLAGS="-shared -Wl,-z,defs,-z,relro $LDFLAGS"
+LDFLAGS="-shared $LDFLAGS"
+AS_IF([test "$ac_cv_elf" = yes], [LDFLAGS="-Wl,-z,defs,-z,relro $LDFLAGS"])
 AC_LINK_IFELSE([dnl
 AC_LANG_PROGRAM([[#include <stdlib.h>
 #undef __thread
@@ -206,13 +237,42 @@ if test "$use_valgrind" = yes; then
 fi
 AM_CONDITIONAL(USE_VALGRIND, test "$use_valgrind" = yes)
 
+AC_ARG_ENABLE([static],
+AS_HELP_STRING([--enable-static],[enable static library]), [static=$enableval], [static=no])
+
 AM_CONDITIONAL(BUILD_STATIC, [dnl
-test "$use_gprof" = yes -o "$use_gcov" = yes])
+test "$use_gprof" = yes -o "$use_gcov" = yes -o "$static" = no])
+
+AC_ARG_ENABLE([shared],
+AS_HELP_STRING([--disable-shared],[disable shared library]), [shared=$enableval], [shared=yes])
+
+AM_CONDITIONAL(BUILD_SHARED, [dnl
+test "$shared" = yes])
 
 AC_ARG_ENABLE([tests-rpath],
 AS_HELP_STRING([--enable-tests-rpath],[build $ORIGIN-using rpath into tests]),
 	       [tests_use_rpath=$enableval], [tests_use_rpath=no])
 AM_CONDITIONAL(TESTS_RPATH, test "$tests_use_rpath" = yes)
+
+AC_ARG_ENABLE([tools],
+AS_HELP_STRING([--disable-tools], [do not build tools]),
+	       [tools=$enableval], [tools=yes])
+AM_CONDITIONAL(ENABLE_TOOLS, test "$tools" = yes)
+
+AC_ARG_ENABLE([libasm],
+AS_HELP_STRING([--disable-libasm], [do not build libasm]),
+	       [libasm=$enableval], [libasm=yes])
+AM_CONDITIONAL(ENABLE_LIBASM, test "$libasm" = yes)
+
+AC_ARG_ENABLE([libdw],
+AS_HELP_STRING([--disable-libdw], [do not build libdw]),
+	       [libdw=$enableval], [libdw=yes])
+AM_CONDITIONAL(ENABLE_LIBDW, test "$libdw" = yes)
+
+AC_ARG_ENABLE([libebl],
+AS_HELP_STRING([--disable-libebl], [do not build libebl]),
+	       [libebl=$enableval], [libebl=yes])
+AM_CONDITIONAL(ENABLE_LIBEBL, test "$libebl" = yes)
 
 LIBEBL_SUBDIR="$PACKAGE"
 AC_ARG_ENABLE([libebl-subdir],
@@ -222,6 +282,7 @@ LIBEBL_SUBDIR="$enable_libebl_subdir"])
 AC_SUBST([LIBEBL_SUBDIR])
 AC_DEFINE_UNQUOTED(LIBEBL_SUBDIR, "$LIBEBL_SUBDIR")
 AH_TEMPLATE([LIBEBL_SUBDIR], [$libdir subdirectory containing libebl modules.])
+
 
 dnl zlib is mandatory.
 save_LIBS="$LIBS"
@@ -244,6 +305,10 @@ AC_SUBST([LIBLZMA])
 zip_LIBS="$LIBS"
 LIBS="$save_LIBS"
 AC_SUBST([zip_LIBS])
+
+AC_CHECK_DECLS(fchmod)
+AC_CHECK_DECLS(powerof2, , , [#include <sys/param.h>])
+AC_FUNC_MMAP
 
 AC_CHECK_LIB([stdc++], [__cxa_demangle], [dnl
 AC_DEFINE([USE_DEMANGLE], [1], [Defined if demangling is enabled])])
@@ -306,30 +371,32 @@ CFLAGS="$old_CFLAGS"])
 AM_CONDITIONAL(HAVE_NULL_DEREFERENCE_WARNING,
 	       [test "x$ac_cv_null_dereference" != "xno"])
 
-dnl Check if we have argp available from our libc
-AC_LINK_IFELSE(
-	[AC_LANG_PROGRAM(
-		[#include <argp.h>],
-		[int argc=1; char *argv[]={"test"}; argp_parse(0,argc,&argv,0,0,0); return 0;]
-		)],
-	[libc_has_argp="true"],
-	[libc_has_argp="false"]
-)
+if test "$tools" = yes ; then
+	dnl Check if we have argp available from our libc
+	AC_LINK_IFELSE(
+		[AC_LANG_PROGRAM(
+			[#include <argp.h>],
+			[int argc=1; char *argv[]={"test"}; argp_parse(0,argc,&argv,0,0,0); return 0;]
+			)],
+		[libc_has_argp="true"],
+		[libc_has_argp="false"]
+	)
 
-dnl If our libc doesn't provide argp, then test for libargp
-if test "$libc_has_argp" = "false" ; then
-	AC_MSG_WARN("libc does not have argp")
-	AC_CHECK_LIB([argp], [argp_parse], [have_argp="true"], [have_argp="false"])
+	dnl If our libc doesn't provide argp, then test for libargp
+	if test "$libc_has_argp" = "false" ; then
+		AC_MSG_WARN("libc does not have argp")
+		AC_CHECK_LIB([argp], [argp_parse], [have_argp="true"], [have_argp="false"])
 
-	if test "$have_argp" = "false"; then
-		AC_MSG_ERROR("no libargp found")
+		if test "$have_argp" = "false"; then
+			AC_MSG_ERROR("no libargp found")
+		else
+			argp_LDADD="-largp"
+		fi
 	else
-		argp_LDADD="-largp"
+		argp_LDADD=""
 	fi
-else
-	argp_LDADD=""
+	AC_SUBST([argp_LDADD])
 fi
-AC_SUBST([argp_LDADD])
 
 dnl Check if we have <linux/bpf.h> for EM_BPF disassembly.
 AC_CHECK_HEADERS(linux/bpf.h)
@@ -341,6 +408,9 @@ dnl Documentation.
 dnl Commented out for now.
 dnl AC_CONFIG_FILES([doc/Makefile])
 
+dnl Gnulib.
+AC_CONFIG_FILES([gnulib/Makefile])
+
 dnl Support library.
 AC_CONFIG_FILES([lib/Makefile])
 
@@ -348,29 +418,47 @@ dnl ELF library.
 AC_CONFIG_FILES([libelf/Makefile])
 
 dnl Higher-level ELF support library.
-AC_CONFIG_FILES([libebl/Makefile])
+if test "$libebl" = yes ; then
+	AC_CONFIG_FILES([libebl/Makefile])
+fi
 
 dnl DWARF-ELF Lower-level Functions support library.
-AC_CONFIG_FILES([libdwelf/Makefile])
+if test "$libdw" = yes; then
+	AC_CONFIG_FILES([libdwelf/Makefile])
+fi
 
 dnl DWARF library.
-AC_CONFIG_FILES([libdw/Makefile])
+if test "$libdw" = yes; then
+	AC_CONFIG_FILES([libdw/Makefile])
+fi
 
 dnl Higher-level DWARF support library.
-AC_CONFIG_FILES([libdwfl/Makefile])
+if test "$libdw" = yes; then
+	AC_CONFIG_FILES([libdwfl/Makefile])
+fi
 
 dnl CPU handling library.
-AC_CONFIG_FILES([libcpu/Makefile])
+if test "$libebl" = yes; then
+	AC_CONFIG_FILES([libcpu/Makefile])
+fi
 
 dnl Assembler library.
-AM_CONDITIONAL(HAVE_LIBASM, true)dnl Used in tests/Makefile.am, which see.
-AC_CONFIG_FILES([libasm/Makefile])
+AM_CONDITIONAL(HAVE_LIBASM, test "$libasm" = yes)dnl Used in tests/Makefile.am, which see.
+if test "$libasm" = yes; then
+	AC_CONFIG_FILES([libasm/Makefile])
+fi
 
 dnl CPU-specific backend libraries.
-AC_CONFIG_FILES([backends/Makefile])
+if test "$libebl" = yes; then
+	AC_CONFIG_FILES([backends/Makefile])
+fi
 
 dnl Tools.
-AC_CONFIG_FILES([src/Makefile po/Makefile.in])
+if test "$tools" = yes ; then
+	AC_CONFIG_FILES([src/Makefile])
+fi
+
+AC_CONFIG_FILES([po/Makefile.in])
 
 dnl Test suite.
 AM_CONDITIONAL(STANDALONE, false)dnl Used in tests/Makefile.am, which see.
@@ -384,9 +472,16 @@ AC_CONFIG_FILES([config/libelf.pc config/libdw.pc])
 AC_SUBST(USE_NLS, yes)
 AM_PO_SUBDIRS
 
+AH_TEMPLATE([ENABLE_TOOLS], [Defined if the tools will be built.])
+if test "$tools" = yes ; then
+	AC_DEFINE([ENABLE_TOOLS])
+fi
+
+AC_CONFIG_FILES([libelf/libelf.h])
+
 dnl Appended to the config.h file.
 dnl We hide all kinds of configuration magic in lib/eu-config.h.
-AH_BOTTOM([#include <eu-config.h>])
+AH_BOTTOM([#include <lib/eu-config.h>])
 
 dnl Version compatibility header.
 AC_CONFIG_FILES([version.h:config/version.h.in])
@@ -489,6 +584,7 @@ AC_MSG_NOTICE([
     Maintainer mode                    : ${enable_maintainer_mode}
     libebl modules subdirectory        : ${LIBEBL_SUBDIR}
     build arch                         : ${ac_cv_build}
+    shared                             : ${shared}
 
   RECOMMENDED FEATURES (should all be yes)
     gzip support                       : ${with_zlib}
@@ -504,6 +600,8 @@ AC_MSG_NOTICE([
   OTHER FEATURES
     Deterministic archives by default  : ${default_ar_deterministic}
     Native language support            : ${USE_NLS}
+    Libebl                             : ${libebl}
+    Tools                              : ${tools}
 
   EXTRA TEST FEATURES (used with make check)
     have bunzip2 installed (required)  : ${HAVE_BUNZIP2}

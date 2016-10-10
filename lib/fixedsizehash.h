@@ -34,8 +34,15 @@
 #include <sys/param.h>
 
 #include <system.h>
+#include "minmax.h"
 
+#ifdef __CONCAT
 #define CONCAT(t1,t2) __CONCAT (t1,t2)
+#else
+#define STROF(t2) t2
+#define CONCAT_EXPANDED(t1,t2) t1 ## t2
+#define CONCAT(t1,t2) CONCAT_EXPANDED(t1,t2)
+#endif
 
 /* Before including this file the following macros must be defined:
 

@@ -29,7 +29,13 @@
 #ifndef LIB_SYSTEM_H
 #define LIB_SYSTEM_H	1
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+#ifdef ENABLE_TOOLS
 #include <argp.h>
+#endif
+#include <errno.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <endian.h>
@@ -58,8 +64,10 @@ extern char *xstrdup (const char *) __attribute__ ((__malloc__));
 extern char *xstrndup (const char *, size_t) __attribute__ ((__malloc__));
 
 
+#ifdef ENABLE_TOOLS
 extern uint32_t crc32 (uint32_t crc, unsigned char *buf, size_t len);
 extern int crc32_file (int fd, uint32_t *resp);
+#endif
 
 /* A special gettext function we use if the strings are too short.  */
 #define sgettext(Str) \
@@ -68,6 +76,14 @@ extern int crc32_file (int fd, uint32_t *resp);
 
 #define gettext_noop(Str) Str
 
+#ifndef TEMP_FAILURE_RETRY
+#define TEMP_FAILURE_RETRY(expression) \
+  ({ ssize_t __res; \
+     do \
+       __res = expression; \
+     while (__res == -1 && errno == EINTR); \
+     __res; });
+#endif
 
 static inline ssize_t __attribute__ ((unused))
 pwrite_retry (int fd, const void *buf, size_t len, off_t off)
@@ -126,6 +142,7 @@ pread_retry (int fd, void *buf, size_t len, off_t off)
 }
 
 
+#ifdef ENABLE_TOOLS
 /* We need define two variables, argp_program_version_hook and
    argp_program_bug_address, in all programs.  argp.h declares these
    variables as non-const (which is correct in general).  But we can
@@ -174,6 +191,7 @@ extern char *color_tls;
 extern char *color_weak;
 
 extern const char color_off[];
+#endif
 
 /* A static assertion.  This will cause a compile-time error if EXPR,
    which must be a compile-time constant, is false.  */

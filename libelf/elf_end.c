@@ -34,7 +34,9 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
+#ifdef HAVE_MMAP
 #include <sys/mman.h>
+#endif
 
 #include "libelfP.h"
 
@@ -224,7 +226,11 @@ elf_end (Elf *elf)
       if ((elf->flags & ELF_F_MALLOCED) != 0)
 	free (elf->map_address);
       else if ((elf->flags & ELF_F_MMAPPED) != 0)
+#ifdef HAVE_MMAP
 	munmap (elf->map_address, elf->maximum_size);
+#else
+	abort ();
+#endif
     }
 
   rwlock_unlock (elf->lock);

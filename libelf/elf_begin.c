@@ -39,13 +39,16 @@
 #include <stddef.h>
 #include <string.h>
 #include <unistd.h>
+#ifdef HAVE_MMAP
 #include <sys/mman.h>
+#endif
 #include <sys/param.h>
 #include <sys/stat.h>
 
 #include <system.h>
 #include "libelfP.h"
 #include "common.h"
+#include "minmax.h"
 
 
 /* Create descriptor for archive in memory.  */
@@ -601,6 +604,7 @@ static struct Elf *
 read_file (int fildes, off_t offset, size_t maxsize,
 	   Elf_Cmd cmd, Elf *parent)
 {
+#ifdef HAVE_MMAP
   void *map_address = NULL;
   int use_mmap = (cmd == ELF_C_READ_MMAP || cmd == ELF_C_RDWR_MMAP
 		  || cmd == ELF_C_WRITE_MMAP
@@ -664,6 +668,7 @@ read_file (int fildes, off_t offset, size_t maxsize,
 
       return result;
     }
+#endif
 
   /* Otherwise we have to do it the hard way.  We read as much as necessary
      from the file whenever we need information which is not available.  */
@@ -1071,12 +1076,14 @@ elf_begin (int fildes, Elf_Cmd cmd, Elf *ref)
   if (ref != NULL)
     /* Make sure the descriptor is not suddenly going away.  */
     rwlock_rdlock (ref->lock);
+#ifdef F_GETFL
   else if (unlikely (fcntl (fildes, F_GETFL) == -1 && errno == EBADF))
     {
       /* We cannot do anything productive without a file descriptor.  */
       __libelf_seterrno (ELF_E_INVALID_FILE);
       return NULL;
     }
+#endif
 
   switch (cmd)
     {

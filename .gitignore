@@ -44,6 +44,7 @@ Makefile.in
 /libcpu/*_lex.c
 /libcpu/*_parse.[ch]
 /libdw/known-dwarf.h
+/libelf/libelf.h
 /po/*.gmo
 /po/*.pot
 /po/en@boldquot.insert-header

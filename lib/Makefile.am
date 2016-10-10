@@ -29,13 +29,12 @@
 ##
 include $(top_srcdir)/config/eu.am
 AM_CFLAGS += -fPIC
-AM_CPPFLAGS += -I$(srcdir)/../libelf
+AM_CPPFLAGS += -I$(srcdir)/../gnulib -I$(srcdir)/../libelf
 
 noinst_LIBRARIES = libeu.a
 
 libeu_a_SOURCES = xstrdup.c xstrndup.c xmalloc.c next_prime.c \
-		  crc32.c crc32_file.c md5.c sha1.c \
-		  color.c
+		  md5.c sha1.c
 
 noinst_HEADERS = fixedsizehash.h system.h dynamicsizehash.h list.h md5.h \
 		 sha1.h eu-config.h
@@ -43,4 +42,8 @@ EXTRA_DIST = dynamicsizehash.c
 
 if !GPROF
 xmalloc_CFLAGS = -ffunction-sections
+endif
+
+if ENABLE_TOOLS
+libeu_a_SOURCES += crc32.c crc32_file.c color.c
 endif

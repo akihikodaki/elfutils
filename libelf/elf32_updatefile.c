@@ -38,11 +38,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#ifdef HAVE_MMAP
 #include <sys/mman.h>
+#endif
 #include <sys/param.h>
 
 #include <system.h>
 #include "libelfP.h"
+#include "minmax.h"
 
 
 #ifndef LIBELFBITS
@@ -101,6 +104,7 @@ sort_sections (Elf_Scn **scns, Elf_ScnList *list)
 }
 
 
+#ifdef HAVE_MMAP
 static inline void
 fill_mmap (size_t offset, char *last_position, char *scn_start,
            char *const shdr_start, char *const shdr_end)
@@ -463,6 +467,7 @@ __elfw2(LIBELFBITS,updatemmap) (Elf *elf, int change_bo, size_t shnum)
 
   return 0;
 }
+#endif
 
 
 /* Size of the buffer we use to generate the blocks of fill bytes.  */

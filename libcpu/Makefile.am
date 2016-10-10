@@ -28,8 +28,8 @@
 ## not, see <http://www.gnu.org/licenses/>.
 ##
 include $(top_srcdir)/config/eu.am
-AM_CPPFLAGS += -I$(srcdir)/../libelf -I$(srcdir)/../libebl \
-	    -I$(srcdir)/../libdw -I$(srcdir)/../libasm
+AM_CPPFLAGS += -I$(srcdir)/../gnulib -I$(srcdir)/../libelf \
+	    -I$(srcdir)/../libebl -I$(srcdir)/../libdw -I$(srcdir)/../libasm
 AM_CFLAGS += -fPIC -fdollars-in-identifiers
 LEXCOMPILE = $(LEX) $(LFLAGS) $(AM_LFLAGS) -P$(<F:lex.l=)
 LEX_OUTPUT_ROOT = lex.$(<F:lex.l=)

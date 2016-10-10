@@ -28,9 +28,12 @@
 ## the GNU Lesser General Public License along with this program.  If
 ## not, see <http://www.gnu.org/licenses/>.
 include $(top_srcdir)/config/eu.am
-AM_CPPFLAGS += -I$(top_srcdir)/libebl -I$(top_srcdir)/libasm \
-	   -I$(top_srcdir)/libelf -I$(top_srcdir)/libdw
+AM_CPPFLAGS += -I$(top_srcdir)/gnulib -I$(top_srcdir)/libebl \
+	   -I$(top_srcdir)/libasm -I$(top_srcdir)/libelf -I$(top_srcdir)/libdw
 
+if ELF
+AM_LDFLAGS = -Wl,-z,defs
+endif
 
 modules = i386 sh x86_64 ia64 alpha arm aarch64 sparc ppc ppc64 s390 \
 	  tilegx m68k bpf
@@ -136,7 +139,7 @@ libebl_%.so libebl_%.map: libebl_%_pic.a $(libelf) $(libdw)
 	$(AM_V_CCLD)$(LINK) -shared -o $(@:.map=.so) \
 		-Wl,--whole-archive $< $(cpu_$*) -Wl,--no-whole-archive \
 		-Wl,--version-script,$(@:.so=.map) \
-		-Wl,-z,defs -Wl,--as-needed $(libelf) $(libdw)
+		-Wl,--as-needed $(libelf) $(libdw)
 	@$(textrel_check)
 
 libebl_i386.so: $(cpu_i386)

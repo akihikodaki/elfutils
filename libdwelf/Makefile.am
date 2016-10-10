@@ -30,8 +30,8 @@
 ## not, see <http://www.gnu.org/licenses/>.
 ##
 include $(top_srcdir)/config/eu.am
-AM_CPPFLAGS += -I$(srcdir)/../libelf -I$(srcdir)/../libdw \
-	       -I$(srcdir)/../libdwfl -I$(srcdir)/../libebl
+AM_CPPFLAGS += -I$(srcdir)/../gnulib -I$(srcdir)/../libelf \
+	       -I$(srcdir)/../libdw -I$(srcdir)/../libdwfl -I$(srcdir)/../libebl
 VERSION = 1
 
 noinst_LIBRARIES = libdwelf.a libdwelf_pic.a

@@ -30,6 +30,7 @@
 # include <config.h>
 #endif
 
+#include <endian.h>
 #include "libdwelfP.h"
 #include "libelfP.h"
 

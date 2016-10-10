@@ -40,12 +40,11 @@
 
 #include "libelfP.h"
 #include "elf-knowledge.h"
+#include "minmax.h"
 
 #ifndef LIBELFBITS
 # define LIBELFBITS 32
 #endif
-
-
 
 static int
 ELFW(default_ehdr,LIBELFBITS) (Elf *elf, ElfW2(LIBELFBITS,Ehdr) *ehdr,
