@@ -100,11 +100,14 @@ if USE_LOCKS
 libelf_so_LDLIBS += -lpthread
 endif
 
+if ELF
+libelf_so_LDFLAGS = -Wl,-z,defs,-z,relro
+endif
 libelf_so_SOURCES =
 libelf.so$(EXEEXT): libelf_pic.a libelf.map
 	$(AM_V_CCLD)$(LINK) -shared -o $@ -Wl,--whole-archive,$<,--no-whole-archive \
 		-Wl,--version-script,$(srcdir)/libelf.map,--no-undefined \
-		-Wl,--soname,$@.$(VERSION),-z,defs,-z,relro $(libelf_so_LDLIBS)
+		-Wl,--soname,$@.$(VERSION) $(libelf_so_LDLIBS)
 	@$(textrel_check)
 	$(AM_V_at)ln -fs $@ $@.$(VERSION)
 
