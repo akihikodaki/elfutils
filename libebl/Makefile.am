@@ -59,4 +59,6 @@ libebl_a_SOURCES = $(gen_SOURCES)
 
 noinst_HEADERS = libeblP.h ebl-hooks.h
 
+if BUILD_SHARED
 CLEANFILES += $(am_libebl_pic_a_OBJECTS)
+endif

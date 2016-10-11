@@ -34,8 +34,6 @@ GCC_INCLUDE = -I$(shell $(CC) -print-file-name=include)
 VERSION = 1
 
 lib_LIBRARIES = libasm.a
-noinst_LIBRARIES = libasm_pic.a
-noinst_PROGRAMS = $(noinst_LIBRARIES:_pic.a=.so)
 pkginclude_HEADERS = libasm.h
 
 libasm_a_SOURCES = asm_begin.c asm_abort.c asm_end.c asm_error.c \
@@ -51,6 +49,12 @@ libasm_a_SOURCES = asm_begin.c asm_abort.c asm_end.c asm_error.c \
 		   asm_adduleb128.c asm_addsleb128.c \
 		   disasm_begin.c disasm_cb.c disasm_end.c disasm_str.c \
 		   symbolhash.c
+
+noinst_HEADERS = libasmP.h symbolhash.h
+
+if BUILD_SHARED
+noinst_LIBRARIES = libasm_pic.a
+noinst_PROGRAMS = $(noinst_LIBRARIES:_pic.a=.so)
 
 libasm_pic_a_SOURCES =
 am_libasm_pic_a_OBJECTS = $(libasm_a_SOURCES:.c=.os)
@@ -81,8 +85,7 @@ uninstall: uninstall-am
 	rm -f $(DESTDIR)$(libdir)/libasm.so.$(VERSION)
 	rm -f $(DESTDIR)$(libdir)/libasm.so
 	rmdir --ignore-fail-on-non-empty $(DESTDIR)$(includedir)/elfutils
-
-noinst_HEADERS = libasmP.h symbolhash.h
 EXTRA_DIST = libasm.map
 
 CLEANFILES += $(am_libasm_pic_a_OBJECTS) libasm.so.$(VERSION)
+endif

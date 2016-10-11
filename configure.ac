@@ -217,8 +217,17 @@ if test "$use_valgrind" = yes; then
 fi
 AM_CONDITIONAL(USE_VALGRIND, test "$use_valgrind" = yes)
 
+AC_ARG_ENABLE([static],
+AS_HELP_STRING([--enable-static],[enable static library]), [static=$enableval], [static=no])
+
 AM_CONDITIONAL(BUILD_STATIC, [dnl
-test "$use_gprof" = yes -o "$use_gcov" = yes])
+test "$use_gprof" = yes -o "$use_gcov" = yes -o "$static" = no])
+
+AC_ARG_ENABLE([shared],
+AS_HELP_STRING([--disable-shared],[disable shared library]), [shared=$enableval], [shared=yes])
+
+AM_CONDITIONAL(BUILD_SHARED, [dnl
+test "$shared" = yes])
 
 AC_ARG_ENABLE([tests-rpath],
 AS_HELP_STRING([--enable-tests-rpath],[build $ORIGIN-using rpath into tests]),
