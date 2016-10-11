@@ -46,6 +46,10 @@
 /* gettext helper macros.  */
 #define _(Str) dgettext ("elfutils", Str)
 
+#if !HAVE_DECL_POWEROF2
+#define powerof2(x) (((x) & ((x) - 1)) == 0)
+#endif
+
 
 /* Helper Macros to write 32 bit and 64 bit functions.  */
 #define __elfw2_(Bits, Name) __elf##Bits##_##Name
@@ -83,7 +87,9 @@
    not part of the library interface, they are only used internally.  */
 enum
 {
+#ifdef HAVE_MMAP
   ELF_F_MMAPPED = 0x40,
+#endif
   ELF_F_MALLOCED = 0x80,
   ELF_F_FILEDATA = 0x100
 };
@@ -501,10 +507,12 @@ extern off_t __elf32_updatenull_wrlock (Elf *elf, int *change_bop,
 extern off_t __elf64_updatenull_wrlock (Elf *elf, int *change_bop,
 					size_t shnum) internal_function;
 
+#ifdef HAVE_MMAP
 extern int __elf32_updatemmap (Elf *elf, int change_bo, size_t shnum)
      internal_function;
 extern int __elf64_updatemmap (Elf *elf, int change_bo, size_t shnum)
      internal_function;
+#endif
 extern int __elf32_updatefile (Elf *elf, int change_bo, size_t shnum)
      internal_function;
 extern int __elf64_updatefile (Elf *elf, int change_bo, size_t shnum)

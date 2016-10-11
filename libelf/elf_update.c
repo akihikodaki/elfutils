@@ -34,7 +34,9 @@
 #include <libelf.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/mman.h>
+#ifdef HAVE_MMAP
+# include <sys/mman.h>
+#endif
 #include <sys/stat.h>
 
 #include "libelfP.h"
@@ -67,6 +69,7 @@ write_file (Elf *elf, off_t size, int change_bo, size_t shnum)
       return -1;
     }
 
+#ifdef HAVE_MMAP
   /* Try to map the file if this isn't done yet.  */
   if (elf->map_address == NULL && elf->cmd == ELF_C_WRITE_MMAP)
     {
@@ -107,6 +110,7 @@ write_file (Elf *elf, off_t size, int change_bo, size_t shnum)
 	size = -1;
     }
   else
+#endif
     {
       /* The file is not mmaped.  */
       if ((class == ELFCLASS32
@@ -130,14 +134,17 @@ write_file (Elf *elf, off_t size, int change_bo, size_t shnum)
   /* POSIX says that ftruncate and write may clear the S_ISUID and S_ISGID
      mode bits.  So make sure we restore them afterwards if they were set.
      This is not atomic if someone else chmod's the file while we operate.  */
+#if defined(S_ISUID) && defined(S_ISGID) && HAVE_DECL_FCHMOD
   if (size != -1
       && unlikely (st.st_mode & (S_ISUID | S_ISGID))
       /* fchmod ignores the bits we cannot change.  */
-      && unlikely (fchmod (elf->fildes, st.st_mode) != 0))
+      && unlikely (fchmod (elf->fildes, st.st_mode) != 0)
+     )
     {
       __libelf_seterrno (ELF_E_WRITE_ERROR);
       size = -1;
     }
+#endif
 
   if (size != -1 && elf->parent == NULL)
     elf->maximum_size = size;

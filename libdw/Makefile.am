@@ -35,8 +35,6 @@ AM_CPPFLAGS += -I$(srcdir)/../libelf
 VERSION = 1
 
 lib_LIBRARIES = libdw.a
-noinst_LIBRARIES = libdw_pic.a
-noinst_PROGRAMS = $(noinst_LIBRARIES:_pic.a=.so)
 
 include_HEADERS = dwarf.h
 pkginclude_HEADERS = libdw.h known-dwarf.h
@@ -99,16 +97,32 @@ $(srcdir)/known-dwarf.h: $(top_srcdir)/config/known-dwarf.awk $(srcdir)/dwarf.h
 	mv -f $@.new $@
 endif
 
+libdwfl_objects = $(shell $(AR) t ../libdwfl/libdwfl.a)
+libdw_a_LIBADD = $(addprefix ../libdwfl/,$(libdwfl_objects))
+
+libdwelf_objects = $(shell $(AR) t ../libdwelf/libdwelf.a)
+libdw_a_LIBADD += $(addprefix ../libdwelf/,$(libdwelf_objects))
+
+noinst_HEADERS = libdwP.h memory-access.h dwarf_abbrev_hash.h \
+		 dwarf_sig8_hash.h cfi.h encoded-value.h
+
+if BUILD_SHARED
+noinst_LIBRARIES = libdw_pic.a
+noinst_PROGRAMS = $(noinst_LIBRARIES:_pic.a=.so)
+
 libdw_pic_a_SOURCES =
 am_libdw_pic_a_OBJECTS = $(libdw_a_SOURCES:.c=.os)
 
+if ELF
+libdw_so_LDFLAGS = -Wl,-z,defs
+endif
 libdw_so_SOURCES =
 libdw.so$(EXEEXT): $(srcdir)/libdw.map libdw_pic.a ../libdwelf/libdwelf_pic.a \
 	  ../libdwfl/libdwfl_pic.a ../libebl/libebl.a \
 	  ../libelf/libelf.so
 # The rpath is necessary for libebl because its $ORIGIN use will
 # not fly in a setuid executable that links in libdw.
-	$(AM_V_CCLD)$(LINK) -shared -o $@ -Wl,--soname,$@.$(VERSION),-z,defs \
+	$(AM_V_CCLD)$(LINK) -shared -o $@ -Wl,--soname,$@.$(VERSION) \
 		-Wl,--enable-new-dtags,-rpath,$(pkglibdir) \
 		-Wl,--version-script,$<,--no-undefined \
 		-Wl,--whole-archive $(filter-out $<,$^) -Wl,--no-whole-archive\
@@ -128,15 +142,7 @@ uninstall: uninstall-am
 	rm -f $(DESTDIR)$(libdir)/libdw.so
 	rmdir --ignore-fail-on-non-empty $(DESTDIR)$(includedir)/elfutils
 
-libdwfl_objects = $(shell $(AR) t ../libdwfl/libdwfl.a)
-libdw_a_LIBADD = $(addprefix ../libdwfl/,$(libdwfl_objects))
-
-libdwelf_objects = $(shell $(AR) t ../libdwelf/libdwelf.a)
-libdw_a_LIBADD += $(addprefix ../libdwelf/,$(libdwelf_objects))
-
-noinst_HEADERS = libdwP.h memory-access.h dwarf_abbrev_hash.h \
-		 dwarf_sig8_hash.h cfi.h encoded-value.h
-
 EXTRA_DIST = libdw.map
 
 MOSTLYCLEANFILES = $(am_libdw_pic_a_OBJECTS) libdw.so.$(VERSION)
+endif

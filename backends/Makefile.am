@@ -31,9 +31,17 @@ include $(top_srcdir)/config/eu.am
 AM_CPPFLAGS += -I$(top_srcdir)/libebl -I$(top_srcdir)/libasm \
 	   -I$(top_srcdir)/libelf -I$(top_srcdir)/libdw
 
+if ELF
+AM_LDFLAGS = -Wl,-z,defs
+endif
 
 modules = i386 sh x86_64 ia64 alpha arm aarch64 sparc ppc ppc64 s390 \
 	  tilegx m68k bpf
+
+noinst_HEADERS = libebl_CPU.h common-reloc.c linux-core-note.c x86_corenote.c
+EXTRA_DIST = $(foreach m,$(modules),$($(m)_SRCS)) $(modules:=_reloc.def)
+
+if BUILD_SHARED
 libebl_pic = libebl_i386_pic.a libebl_sh_pic.a libebl_x86_64_pic.a    \
 	     libebl_ia64_pic.a libebl_alpha_pic.a libebl_arm_pic.a    \
 	     libebl_aarch64_pic.a libebl_sparc_pic.a libebl_ppc_pic.a \
@@ -136,7 +144,7 @@ libebl_%.so libebl_%.map: libebl_%_pic.a $(libelf) $(libdw)
 	$(AM_V_CCLD)$(LINK) -shared -o $(@:.map=.so) \
 		-Wl,--whole-archive $< $(cpu_$*) -Wl,--no-whole-archive \
 		-Wl,--version-script,$(@:.so=.map) \
-		-Wl,-z,defs -Wl,--as-needed $(libelf) $(libdw)
+		-Wl,--as-needed $(libelf) $(libdw)
 	@$(textrel_check)
 
 libebl_i386.so: $(cpu_i386)
@@ -158,9 +166,7 @@ uninstall: uninstall-am
 	done
 	rmdir --ignore-fail-on-non-empty $(DESTDIR)$(libdir)/$(LIBEBL_SUBDIR)
 
-noinst_HEADERS = libebl_CPU.h common-reloc.c linux-core-note.c x86_corenote.c
-EXTRA_DIST = $(foreach m,$(modules),$($(m)_SRCS)) $(modules:=_reloc.def)
-
 CLEANFILES += $(foreach m,$(modules),\
 			libebl_$(m).map libebl_$(m).so \
 			$(am_libebl_$(m)_pic_a_OBJECTS))
+endif

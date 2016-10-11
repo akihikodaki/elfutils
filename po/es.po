@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: elfutils.master.es\n"
 "Report-Msgid-Bugs-To: http://bugzilla.redhat.com/\n"
-"POT-Creation-Date: 2016-08-25 18:09+0200\n"
+"POT-Creation-Date: 2016-10-11 13:06+0900\n"
 "PO-Revision-Date: 2011-01-10 15:17-0300\n"
 "Last-Translator: Claudio Rodrigo Pereyra Diaz <claudiorodrigo@pereyradiaz."
 "com.ar>\n"
@@ -39,13 +39,13 @@ msgid ""
 "  - 'auto', 'tty', 'if-tty'\n"
 msgstr ""
 
-#: lib/color.c:190 src/objdump.c:738
+#: lib/color.c:190 src/objdump.c:739
 #, fuzzy, c-format
 msgid "cannot allocate memory"
 msgstr "No se puede asignar sección PLT: %s"
 
 #: lib/xmalloc.c:53 lib/xmalloc.c:66 lib/xmalloc.c:78 src/readelf.c:3291
-#: src/readelf.c:3682 src/readelf.c:8430 src/unstrip.c:2237 src/unstrip.c:2442
+#: src/readelf.c:3682 src/readelf.c:8430 src/unstrip.c:2238 src/unstrip.c:2443
 #, c-format
 msgid "memory exhausted"
 msgstr "memoria agotada"
@@ -246,7 +246,7 @@ msgstr "operando inválido"
 msgid "not a CU (unit) DIE"
 msgstr ""
 
-#: libdwfl/argp-std.c:46 src/stack.c:642 src/unstrip.c:2384
+#: libdwfl/argp-std.c:46 src/stack.c:642 src/unstrip.c:2385
 msgid "Input selection options:"
 msgstr "Opciones de selección de entrada:"
 
@@ -809,9 +809,9 @@ msgid "[ADDR...]"
 msgstr "[DIREC...]"
 
 #: src/addr2line.c:216 src/ar.c:285 src/elfcmp.c:672 src/elflint.c:235
-#: src/findtextrel.c:162 src/nm.c:262 src/objdump.c:177 src/ranlib.c:124
-#: src/readelf.c:509 src/size.c:207 src/strings.c:230 src/strip.c:219
-#: src/unstrip.c:233
+#: src/findtextrel.c:162 src/nm.c:262 src/objdump.c:178 src/ranlib.c:124
+#: src/readelf.c:509 src/size.c:206 src/strings.c:230 src/strip.c:220
+#: src/unstrip.c:234
 #, c-format
 msgid ""
 "Copyright (C) %s Red Hat, Inc.\n"
@@ -825,9 +825,9 @@ msgstr ""
 "DETERMINADO.\n"
 
 #: src/addr2line.c:221 src/ar.c:290 src/elfcmp.c:677 src/elflint.c:240
-#: src/findtextrel.c:167 src/nm.c:267 src/objdump.c:182 src/ranlib.c:129
-#: src/readelf.c:514 src/size.c:212 src/strings.c:235 src/strip.c:224
-#: src/unstrip.c:238
+#: src/findtextrel.c:167 src/nm.c:267 src/objdump.c:183 src/ranlib.c:129
+#: src/readelf.c:514 src/size.c:211 src/strings.c:235 src/strip.c:225
+#: src/unstrip.c:239
 #, c-format
 msgid "Written by %s.\n"
 msgstr "Escrito por %s.\n"
@@ -1076,7 +1076,7 @@ msgstr "no se encuentra miembro de posición %s "
 msgid "%s: no entry %s in archive!\n"
 msgstr "%s: ¡no hay entrada %s en archive!\n"
 
-#: src/ar.c:1259 src/objdump.c:253
+#: src/ar.c:1259 src/objdump.c:254
 #, c-format
 msgid "cannot open %s"
 msgstr "no sepuede abrir %s"
@@ -1311,8 +1311,8 @@ msgid "Invalid value '%s' for --gaps parameter."
 msgstr "Valor inválido '%s' para parámetro --gaps"
 
 #: src/elfcmp.c:732 src/findtextrel.c:221 src/nm.c:378 src/ranlib.c:157
-#: src/size.c:289 src/strings.c:186 src/strip.c:467 src/strip.c:504
-#: src/unstrip.c:2033 src/unstrip.c:2062
+#: src/size.c:288 src/strings.c:186 src/strip.c:468 src/strip.c:505
+#: src/unstrip.c:2034 src/unstrip.c:2063
 #, c-format
 msgid "cannot open '%s'"
 msgstr "Imposible abrir '%s'"
@@ -1342,74 +1342,74 @@ msgstr "No se puede obtener contenido de sección %zu: %s"
 msgid "cannot get relocation: %s"
 msgstr "No se puede obtener reubicación: %s"
 
-#: src/elfcompress.c:121 src/strip.c:255 src/unstrip.c:121
+#: src/elfcompress.c:122 src/strip.c:256 src/unstrip.c:122
 #, c-format
 msgid "-o option specified twice"
 msgstr "opción -o especificada dos veces"
 
-#: src/elfcompress.c:128
+#: src/elfcompress.c:129
 #, fuzzy, c-format
 msgid "-t option specified twice"
 msgstr "opción -f especificada dos veces"
 
-#: src/elfcompress.c:137
+#: src/elfcompress.c:138
 #, fuzzy, c-format
 msgid "unknown compression type '%s'"
 msgstr "tipo desconocido"
 
 #. We need at least one input file.
-#: src/elfcompress.c:149 src/elfcompress.c:1310
+#: src/elfcompress.c:150 src/elfcompress.c:1311
 #, fuzzy, c-format
 msgid "No input file given"
 msgstr "archivo de entrada vacío"
 
-#: src/elfcompress.c:155 src/elfcompress.c:1315
+#: src/elfcompress.c:156 src/elfcompress.c:1316
 #, fuzzy, c-format
 msgid "Only one input file allowed together with '-o'"
 msgstr "Sólo se permite ingresar un archivo junto con '-o' y '-f'"
 
-#: src/elfcompress.c:1272
+#: src/elfcompress.c:1273
 #, fuzzy
 msgid "Place (de)compressed output into FILE"
 msgstr "Colocar la salida obtenida en FICHERO"
 
-#: src/elfcompress.c:1275
+#: src/elfcompress.c:1276
 msgid ""
 "What type of compression to apply. TYPE can be 'none' (decompress), "
 "'zlib' (ELF ZLIB compression, the default, 'zlib-gabi' is an alias) or 'zlib-"
 "gnu' (.zdebug GNU style compression, 'gnu' is an alias)"
 msgstr ""
 
-#: src/elfcompress.c:1278
+#: src/elfcompress.c:1279
 msgid ""
 "SECTION name to (de)compress, SECTION is an extended wildcard pattern "
 "(defaults to '.?(z)debug*')"
 msgstr ""
 
-#: src/elfcompress.c:1281
+#: src/elfcompress.c:1282
 msgid "Print a message for each section being (de)compressed"
 msgstr ""
 
-#: src/elfcompress.c:1284
+#: src/elfcompress.c:1285
 msgid "Force compression of section even if it would become larger"
 msgstr ""
 
-#: src/elfcompress.c:1287 src/strip.c:88
+#: src/elfcompress.c:1288 src/strip.c:89
 msgid "Relax a few rules to handle slightly broken ELF files"
 msgstr "Relaja algunas reglas para manejar ficheros ELF rotos"
 
-#: src/elfcompress.c:1290
+#: src/elfcompress.c:1291
 #, fuzzy
 msgid "Be silent when a section cannot be compressed"
 msgstr ""
 "Sección [%2zu] '%s': dirección de secciones de datos de hilo-local no cero\n"
 
 #. Strings for arguments in help texts.
-#: src/elfcompress.c:1299 src/elflint.c:78 src/readelf.c:126
+#: src/elfcompress.c:1300 src/elflint.c:78 src/readelf.c:126
 msgid "FILE..."
 msgstr "FICHERO..."
 
-#: src/elfcompress.c:1300
+#: src/elfcompress.c:1301
 msgid "Compress or decompress sections in an ELF file."
 msgstr ""
 
@@ -3447,8 +3447,8 @@ msgstr ""
 "Localizar origen de reubicaciones de texto en FICHEROS (a.out por defecto)."
 
 #. Strings for arguments in help texts.
-#: src/findtextrel.c:76 src/nm.c:108 src/objdump.c:71 src/size.c:83
-#: src/strings.c:88 src/strip.c:96
+#: src/findtextrel.c:76 src/nm.c:108 src/objdump.c:72 src/size.c:82
+#: src/strings.c:88 src/strip.c:97
 msgid "[FILE...]"
 msgstr "[FICHERO...]"
 
@@ -3543,7 +3543,7 @@ msgstr ""
 "Una reubicación modifica memoria en compensación %llu en un segmento "
 "protegido contra escritura\n"
 
-#: src/nm.c:66 src/strip.c:68
+#: src/nm.c:66 src/strip.c:69
 msgid "Output selection:"
 msgstr "Selección de salida:"
 
@@ -3571,7 +3571,7 @@ msgstr "Mostrar sólo símbolos indefinidos"
 msgid "Include index for symbols from archive members"
 msgstr "Incluir índices para símbolos de miembros de archivo"
 
-#: src/nm.c:77 src/size.c:57
+#: src/nm.c:77 src/size.c:56
 msgid "Output format:"
 msgstr "Formato de salida:"
 
@@ -3595,7 +3595,7 @@ msgstr "lo mismo que --format=bsd"
 msgid "Same as --format=posix"
 msgstr "lo mismo que --format=posix"
 
-#: src/nm.c:86 src/size.c:63
+#: src/nm.c:86 src/size.c:62
 msgid "Use RADIX for printing symbol values"
 msgstr "Utilizar RADIX para imprimir valores de símbolo"
 
@@ -3608,7 +3608,7 @@ msgstr "Marcar símbolos débiles"
 msgid "Print size of defined symbols"
 msgstr "Tamaño de impresión de símbolos definidos"
 
-#: src/nm.c:91 src/size.c:71 src/strip.c:73 src/unstrip.c:73
+#: src/nm.c:91 src/size.c:70 src/strip.c:74 src/unstrip.c:74
 msgid "Output options:"
 msgstr "Opciones de salida:"
 
@@ -3633,23 +3633,23 @@ msgstr ""
 msgid "List symbols from FILEs (a.out by default)."
 msgstr "Listar símbolos de FICHEROS (a.out por defecto)."
 
-#: src/nm.c:116 src/objdump.c:79
+#: src/nm.c:116 src/objdump.c:80
 #, fuzzy
 msgid "Output formatting"
 msgstr "Formato de salida:"
 
-#: src/nm.c:140 src/objdump.c:103 src/size.c:108 src/strip.c:128
+#: src/nm.c:140 src/objdump.c:104 src/size.c:107 src/strip.c:129
 #, fuzzy, c-format
 msgid "%s: INTERNAL ERROR %d (%s): %s"
 msgstr "%s: ERROR INTERNO %d (%s-%s): %s"
 
-#: src/nm.c:395 src/nm.c:407 src/size.c:305 src/size.c:314 src/size.c:325
-#: src/strip.c:2300
+#: src/nm.c:395 src/nm.c:407 src/size.c:304 src/size.c:313 src/size.c:324
+#: src/strip.c:2301
 #, c-format
 msgid "while closing '%s'"
 msgstr "error al cerrar '%s'"
 
-#: src/nm.c:417 src/objdump.c:292 src/strip.c:392
+#: src/nm.c:417 src/objdump.c:293 src/strip.c:393
 #, c-format
 msgid "%s: File format not recognized"
 msgstr "%s: No se reconoce el formato del fichero"
@@ -3679,7 +3679,7 @@ msgstr "%s en %s\n"
 msgid "cannot reset archive offset to beginning"
 msgstr "imposible restablecer compensación de archivo al inicio"
 
-#: src/nm.c:504 src/objdump.c:340
+#: src/nm.c:504 src/objdump.c:341
 #, c-format
 msgid "%s%s%s: file format not recognized"
 msgstr "%s%s%s: no se reconoció el formato de fichero"
@@ -3689,12 +3689,12 @@ msgstr "%s%s%s: no se reconoció el formato de fichero"
 msgid "cannot create search tree"
 msgstr "No se puede crear el árbol de búsqueda"
 
-#: src/nm.c:760 src/nm.c:1221 src/objdump.c:789 src/readelf.c:545
+#: src/nm.c:760 src/nm.c:1221 src/objdump.c:790 src/readelf.c:545
 #: src/readelf.c:1123 src/readelf.c:1323 src/readelf.c:1471 src/readelf.c:1672
 #: src/readelf.c:1878 src/readelf.c:2068 src/readelf.c:2309 src/readelf.c:2567
 #: src/readelf.c:2643 src/readelf.c:2730 src/readelf.c:3310 src/readelf.c:3360
 #: src/readelf.c:3423 src/readelf.c:8334 src/readelf.c:9434 src/readelf.c:9637
-#: src/readelf.c:9705 src/size.c:413 src/size.c:482 src/strip.c:521
+#: src/readelf.c:9705 src/size.c:412 src/size.c:481 src/strip.c:522
 #, c-format
 msgid "cannot get section header string table index"
 msgstr "no se puede obtener índice de cadena de encabezamiento de sección"
@@ -3751,54 +3751,54 @@ msgstr "%s%s%s%s: Operación inválida"
 msgid "%s%s%s: no symbols"
 msgstr "%s%s%s: No hay símbolos"
 
-#: src/objdump.c:52
+#: src/objdump.c:53
 msgid "Mode selection:"
 msgstr "Selección de modo:"
 
-#: src/objdump.c:53
+#: src/objdump.c:54
 msgid "Display relocation information."
 msgstr "Mostrar la reubicación de información."
 
-#: src/objdump.c:55
+#: src/objdump.c:56
 msgid "Display the full contents of all sections requested"
 msgstr "Mostrar el contenido total de todas las secciones solicitadas"
 
-#: src/objdump.c:57
+#: src/objdump.c:58
 msgid "Display assembler code of executable sections"
 msgstr "Mostrar código de ensamblador de secciones ejecutables"
 
-#: src/objdump.c:59
+#: src/objdump.c:60
 #, fuzzy
 msgid "Output content selection:"
 msgstr "Selección de opción de salida:"
 
-#: src/objdump.c:61
+#: src/objdump.c:62
 msgid "Only display information for section NAME."
 msgstr "Sólo muestra información para NOMBRE de sección."
 
 #. Short description of program.
-#: src/objdump.c:67
+#: src/objdump.c:68
 msgid "Show information from FILEs (a.out by default)."
 msgstr "Muestra información de FICHEROS (a.out por defecto)."
 
-#: src/objdump.c:232 src/readelf.c:479
+#: src/objdump.c:233 src/readelf.c:479
 msgid "No operation specified.\n"
 msgstr "No se especificó una operación.\n"
 
-#: src/objdump.c:270 src/objdump.c:282
+#: src/objdump.c:271 src/objdump.c:283
 #, c-format
 msgid "while close `%s'"
 msgstr "mientras cierra `%s'"
 
-#: src/objdump.c:375 src/readelf.c:1973 src/readelf.c:2165
+#: src/objdump.c:376 src/readelf.c:1973 src/readelf.c:2165
 msgid "INVALID SYMBOL"
 msgstr "SÍMBOLO INVÁLIDO"
 
-#: src/objdump.c:390 src/readelf.c:2007 src/readelf.c:2201
+#: src/objdump.c:391 src/readelf.c:2007 src/readelf.c:2201
 msgid "INVALID SECTION"
 msgstr "SECCIÓN INVÁLIDA"
 
-#: src/objdump.c:510
+#: src/objdump.c:511
 #, c-format
 msgid ""
 "\n"
@@ -3809,16 +3809,16 @@ msgstr ""
 "REUBICACIÓN DE REGISTROS PARA [%s]:\n"
 "%-*s TIPO                 VALOR\n"
 
-#: src/objdump.c:513
+#: src/objdump.c:514
 msgid "OFFSET"
 msgstr "COMPENSACIÓN"
 
-#: src/objdump.c:578
+#: src/objdump.c:579
 #, c-format
 msgid "Contents of section %s:\n"
 msgstr "Contenido de la sección %s:\n"
 
-#: src/objdump.c:699
+#: src/objdump.c:700
 #, c-format
 msgid "cannot disassemble"
 msgstr "No se puede desensamblar"
@@ -3980,7 +3980,7 @@ msgstr "Sección de depuración DWARF desconocida `%s'.\n"
 msgid "cannot generate Elf descriptor: %s"
 msgstr "no se puede crear descriptor ELF: %s"
 
-#: src/readelf.c:536 src/readelf.c:852 src/strip.c:590
+#: src/readelf.c:536 src/readelf.c:852 src/strip.c:591
 #, c-format
 msgid "cannot determine number of sections: %s"
 msgstr "no se pudieron determinar el número de secciones: %s"
@@ -3991,10 +3991,10 @@ msgid "cannot get section: %s"
 msgstr "No se puede encontrar la sección: %s"
 
 #: src/readelf.c:563 src/readelf.c:1152 src/readelf.c:1355 src/readelf.c:9657
-#: src/unstrip.c:388 src/unstrip.c:419 src/unstrip.c:468 src/unstrip.c:578
-#: src/unstrip.c:595 src/unstrip.c:632 src/unstrip.c:830 src/unstrip.c:1119
-#: src/unstrip.c:1311 src/unstrip.c:1371 src/unstrip.c:1492 src/unstrip.c:1545
-#: src/unstrip.c:1660 src/unstrip.c:1800 src/unstrip.c:1895
+#: src/unstrip.c:389 src/unstrip.c:420 src/unstrip.c:469 src/unstrip.c:579
+#: src/unstrip.c:596 src/unstrip.c:633 src/unstrip.c:831 src/unstrip.c:1120
+#: src/unstrip.c:1312 src/unstrip.c:1372 src/unstrip.c:1493 src/unstrip.c:1546
+#: src/unstrip.c:1661 src/unstrip.c:1801 src/unstrip.c:1896
 #, c-format
 msgid "cannot get section header: %s"
 msgstr "No se puede obtener encabezamiento de sección: %s"
@@ -4328,7 +4328,7 @@ msgstr ""
 " Sección para asignación de segmento:\n"
 "  Secciones de segmento..."
 
-#: src/readelf.c:1336 src/unstrip.c:1954 src/unstrip.c:1996 src/unstrip.c:2003
+#: src/readelf.c:1336 src/unstrip.c:1955 src/unstrip.c:1997 src/unstrip.c:2004
 #, c-format
 msgid "cannot get program header: %s"
 msgstr "no se puede obtener memoria para encabezamiento del programa: %s"
@@ -5847,7 +5847,7 @@ msgstr "no es posible extraer miembro en compensación %Zu en '%s': %s"
 msgid "Archive member '%s' contains:\n"
 msgstr "Miembro de archivo contiene '%s':\n"
 
-#: src/size.c:59
+#: src/size.c:58
 msgid ""
 "Use the output format FORMAT.  FORMAT can be `bsd' or `sysv'.  The default "
 "is `bsd'"
@@ -5855,66 +5855,66 @@ msgstr ""
 "Utilice el formato de salida FORMAT. FORMAT puede ser tanto `bsd' como "
 "`sysv'. El establecido por defecto es `bsd'"
 
-#: src/size.c:61
+#: src/size.c:60
 msgid "Same as `--format=sysv'"
 msgstr "lo mismo que `--format=sysv'"
 
-#: src/size.c:62
+#: src/size.c:61
 msgid "Same as `--format=bsd'"
 msgstr "lo mismo que `--format=bsd'"
 
-#: src/size.c:65
+#: src/size.c:64
 msgid "Same as `--radix=10'"
 msgstr "lo mismo que `--radix=10'"
 
-#: src/size.c:66
+#: src/size.c:65
 msgid "Same as `--radix=8'"
 msgstr "lo mismo que `--radix=8'"
 
-#: src/size.c:67
+#: src/size.c:66
 msgid "Same as `--radix=16'"
 msgstr "lo mismo que`--radix=16'"
 
-#: src/size.c:69
+#: src/size.c:68
 msgid "Similar to `--format=sysv' output but in one line"
 msgstr "Similar a la salida `--format=sysv' pero en una sola línea"
 
-#: src/size.c:73
+#: src/size.c:72
 msgid "Print size and permission flags for loadable segments"
 msgstr ""
 "Imprime el tamaño y las marcas de permiso para los segmentos que pueden ser "
 "cargados"
 
-#: src/size.c:74
+#: src/size.c:73
 msgid "Display the total sizes (bsd only)"
 msgstr "Muestra el tamaño total (bsd solamente)"
 
 #. Short description of program.
-#: src/size.c:79
+#: src/size.c:78
 msgid "List section sizes of FILEs (a.out by default)."
 msgstr "Lista los tamaños de sección de FICHEROS (por defecto a.out). "
 
-#: src/size.c:257
+#: src/size.c:256
 #, c-format
 msgid "Invalid format: %s"
 msgstr "Formato de archivo inválido: %s"
 
-#: src/size.c:268
+#: src/size.c:267
 #, c-format
 msgid "Invalid radix: %s"
 msgstr "Radical inválido: %s"
 
-#: src/size.c:327
+#: src/size.c:326
 #, c-format
 msgid "%s: file format not recognized"
 msgstr "%s: No se reconoce el formato del fichero"
 
-#: src/size.c:433 src/size.c:566
+#: src/size.c:432 src/size.c:565
 #, c-format
 msgid " (ex %s)"
 msgstr " (ex %s)"
 
-#: src/size.c:591
+#: src/size.c:590
 msgid "(TOTALS)\n"
 msgstr "(TOTALES)\n"
 
@@ -6102,82 +6102,82 @@ msgstr "mprotect falló"
 msgid "Skipping section %zd '%s' data outside file"
 msgstr ""
 
-#: src/strip.c:69
+#: src/strip.c:70
 msgid "Place stripped output into FILE"
 msgstr "Colocar la salida obtenida en FICHERO"
 
-#: src/strip.c:70
+#: src/strip.c:71
 msgid "Extract the removed sections into FILE"
 msgstr "Extraer secciones eliminadas en FICHERO"
 
-#: src/strip.c:71
+#: src/strip.c:72
 msgid "Embed name FILE instead of -f argument"
 msgstr "Incorporar nombre FILE en lugar de argumento -f"
 
-#: src/strip.c:75
+#: src/strip.c:76
 msgid "Remove all debugging symbols"
 msgstr "Elimina todos los símbolos de depuración"
 
-#: src/strip.c:79
+#: src/strip.c:80
 msgid "Remove section headers (not recommended)"
 msgstr "Quitar sección de cabeceras (no recomendado)"
 
-#: src/strip.c:81
+#: src/strip.c:82
 msgid "Copy modified/access timestamps to the output"
 msgstr "Copiar marcas de tiempo modificadas/acceso a la salida"
 
-#: src/strip.c:83
+#: src/strip.c:84
 msgid ""
 "Resolve all trivial relocations between debug sections if the removed "
 "sections are placed in a debug file (only relevant for ET_REL files, "
 "operation is not reversable, needs -f)"
 msgstr ""
 
-#: src/strip.c:85
+#: src/strip.c:86
 msgid "Remove .comment section"
 msgstr "Quitar sección de comentario"
 
 #. Short description of program.
-#: src/strip.c:93
+#: src/strip.c:94
 msgid "Discard symbols from object files."
 msgstr "Descarta símbolos de archivos objeto."
 
-#: src/strip.c:187
+#: src/strip.c:188
 #, c-format
 msgid "--reloc-debug-sections used without -f"
 msgstr ""
 
-#: src/strip.c:201
+#: src/strip.c:202
 #, c-format
 msgid "Only one input file allowed together with '-o' and '-f'"
 msgstr "Sólo se permite ingresar un archivo junto con '-o' y '-f'"
 
-#: src/strip.c:237
+#: src/strip.c:238
 #, c-format
 msgid "-f option specified twice"
 msgstr "opción -f especificada dos veces"
 
-#: src/strip.c:246
+#: src/strip.c:247
 #, c-format
 msgid "-F option specified twice"
 msgstr "opción -F especificada dos veces"
 
-#: src/strip.c:279
+#: src/strip.c:280
 #, c-format
 msgid "-R option supports only .comment section"
 msgstr "la opción -R soporta únicamente. sección de comentario"
 
-#: src/strip.c:321 src/strip.c:345
+#: src/strip.c:322 src/strip.c:346
 #, c-format
 msgid "cannot stat input file '%s'"
 msgstr "no sepuede stat fichero de entrada '%s'"
 
-#: src/strip.c:335
+#: src/strip.c:336
 #, c-format
 msgid "while opening '%s'"
 msgstr "mientras se abría '%s'"
 
-#: src/strip.c:373
+#: src/strip.c:374
 #, c-format
 msgid "%s: cannot use -o or -f when stripping archive"
 msgstr "%s: no puede utilizarse -o o -f cuando se extrae un archivo"
@@ -6188,364 +6188,364 @@ msgstr "%s: no puede utilizarse -o o -f cuando se extrae un archivo"
 #. result = handle_ar (fd, elf, NULL, fname,
 #. preserve_dates ? tv : NULL);
 #.
-#: src/strip.c:385
+#: src/strip.c:386
 #, fuzzy, c-format
 msgid "%s: no support for stripping archive"
 msgstr "%s: no puede utilizarse -o o -f cuando se extrae un archivo"
 
-#: src/strip.c:484
+#: src/strip.c:485
 #, c-format
 msgid "cannot open EBL backend"
 msgstr "No se puede abrir el segundo plano EBL"
 
-#: src/strip.c:529
+#: src/strip.c:530
 #, fuzzy, c-format
 msgid "cannot get number of phdrs"
 msgstr "no se pudo determinar la cantidad de encabezados de programa: %s"
 
-#: src/strip.c:545 src/strip.c:569
+#: src/strip.c:546 src/strip.c:570
 #, c-format
 msgid "cannot create new file '%s': %s"
 msgstr "no se puede crear fichero nuevo '%s': %s"
 
-#: src/strip.c:635
+#: src/strip.c:636
 #, c-format
 msgid "illformed file '%s'"
 msgstr "Fichero illformed '%s'"
 
-#: src/strip.c:969 src/strip.c:1068
+#: src/strip.c:970 src/strip.c:1069
 #, c-format
 msgid "while generating output file: %s"
 msgstr "al generar fichero de salida: %s"
 
-#: src/strip.c:1034 src/strip.c:2091
+#: src/strip.c:1035 src/strip.c:2092
 #, c-format
 msgid "%s: error while creating ELF header: %s"
 msgstr "%s: error al crear encabezamiento ELF: %s"
 
-#: src/strip.c:1051
+#: src/strip.c:1052
 #, c-format
 msgid "while preparing output for '%s'"
 msgstr "al preparar salida para '%s'"
 
-#: src/strip.c:1109 src/strip.c:1172
+#: src/strip.c:1110 src/strip.c:1173
 #, c-format
 msgid "while create section header section: %s"
 msgstr "al crear sección de encabezamiento de sección: %s"
 
-#: src/strip.c:1118
+#: src/strip.c:1119
 #, c-format
 msgid "cannot allocate section data: %s"
 msgstr "no se puede asignar espacio para los datos: %s"
 
-#: src/strip.c:1184
+#: src/strip.c:1185
 #, c-format
 msgid "while create section header string table: %s"
 msgstr "al crear tabla de cadenas de encabezamiento de sección: %s"
 
-#: src/strip.c:1191
+#: src/strip.c:1192
 #, fuzzy, c-format
 msgid "no memory to create section header string table"
 msgstr "al crear tabla de cadenas de encabezamiento de sección: %s"
 
-#: src/strip.c:1877
+#: src/strip.c:1878
 #, fuzzy, c-format
 msgid "bad relocation"
 msgstr "Mostrar reubicaciones"
 
-#: src/strip.c:2002 src/strip.c:2115
+#: src/strip.c:2003 src/strip.c:2116
 #, c-format
 msgid "while writing '%s': %s"
 msgstr "al escribir '%s': %s"
 
-#: src/strip.c:2013
+#: src/strip.c:2014
 #, c-format
 msgid "while creating '%s'"
 msgstr "al crear '%s'"
 
-#: src/strip.c:2036
+#: src/strip.c:2037
 #, c-format
 msgid "while computing checksum for debug information"
 msgstr "al computar la suma de verificación para información de depuración"
 
-#: src/strip.c:2100
+#: src/strip.c:2101
 #, c-format
 msgid "%s: error while reading the file: %s"
 msgstr "%s: error al leer el fichero: %s"
 
-#: src/strip.c:2140 src/strip.c:2160
+#: src/strip.c:2141 src/strip.c:2161
 #, c-format
 msgid "while writing '%s'"
 msgstr "al escribir '%s'"
 
-#: src/strip.c:2197 src/strip.c:2204
+#: src/strip.c:2198 src/strip.c:2205
 #, c-format
 msgid "error while finishing '%s': %s"
 msgstr "Error al terminar '%s': %s"
 
-#: src/strip.c:2221 src/strip.c:2293
+#: src/strip.c:2222 src/strip.c:2294
 #, c-format
 msgid "cannot set access and modification date of '%s'"
 msgstr "no es posible establecer acceso y fecha de modificación de '%s'"
 
-#: src/unstrip.c:70
+#: src/unstrip.c:71
 msgid "Match MODULE against file names, not module names"
 msgstr "Coincidir MODULO con nombres de archivo, no con nombres de módulo"
 
-#: src/unstrip.c:71
+#: src/unstrip.c:72
 msgid "Silently skip unfindable files"
 msgstr "Omitir silenciosamente los archivos perdidos"
 
-#: src/unstrip.c:74
+#: src/unstrip.c:75
 msgid "Place output into FILE"
 msgstr "Colocar salida en FICHERO"
 
-#: src/unstrip.c:76
+#: src/unstrip.c:77
 msgid "Create multiple output files under DIRECTORY"
 msgstr "Crear archivos de salida múltiple bajo DIRECTORIO"
 
-#: src/unstrip.c:77
+#: src/unstrip.c:78
 msgid "Use module rather than file names"
 msgstr "Usar módulo en lugar de nombres de archivo"
 
-#: src/unstrip.c:79
+#: src/unstrip.c:80
 msgid "Create output for modules that have no separate debug information"
 msgstr ""
 "Crear salida para módulos que no tienen información de depuración "
 "independiente"
 
-#: src/unstrip.c:82
+#: src/unstrip.c:83
 msgid "Apply relocations to section contents in ET_REL files"
 msgstr "Aplicar reubicaciones a contenido de sección en archivos ET_REL"
 
-#: src/unstrip.c:84
+#: src/unstrip.c:85
 msgid "Only list module and file names, build IDs"
 msgstr "Solamente listar módulo y nombres de archivo, crear los ID"
 
-#: src/unstrip.c:86
+#: src/unstrip.c:87
 msgid "Force combining files even if some ELF headers don't seem to match"
 msgstr ""
 
-#: src/unstrip.c:130
+#: src/unstrip.c:131
 #, c-format
 msgid "-d option specified twice"
 msgstr "opción -d especificada dos veces"
 
-#: src/unstrip.c:165
+#: src/unstrip.c:166
 #, c-format
 msgid "only one of -o or -d allowed"
 msgstr "Sólo se permite usar -o ó -d "
 
-#: src/unstrip.c:174
+#: src/unstrip.c:175
 #, c-format
 msgid "-n cannot be used with explicit files or -o or -d"
 msgstr "-n no puede utilizarse con archivos explícitos o con -o ó -d"
 
-#: src/unstrip.c:189
+#: src/unstrip.c:190
 #, c-format
 msgid "output directory '%s'"
 msgstr "Directorio de salida '%s'"
 
-#: src/unstrip.c:198
+#: src/unstrip.c:199
 #, c-format
 msgid "exactly two file arguments are required"
 msgstr "dos argumentos de archivos se requieren exactamente"
 
-#: src/unstrip.c:204
+#: src/unstrip.c:205
 #, c-format
 msgid "-m, -a, -R, and -i options not allowed with explicit files"
 msgstr "No se permiten las opciones -m, -a, -R, ni -i con archivos explícitos"
 
-#: src/unstrip.c:217
+#: src/unstrip.c:218
 #, c-format
 msgid "-o or -d is required when using implicit files"
 msgstr "se requiere -o ó -d cuando se utilizan archivos implícitos"
 
-#: src/unstrip.c:253
+#: src/unstrip.c:254
 #, c-format
 msgid "cannot create ELF header: %s"
 msgstr "no se puede crear el encabezamiento ELF: %s"
 
-#: src/unstrip.c:258
+#: src/unstrip.c:259
 #, c-format
 msgid "cannot copy ELF header: %s"
 msgstr "no se puede copiar encabezamiento ELF: %s"
 
-#: src/unstrip.c:262 src/unstrip.c:1943 src/unstrip.c:1986
+#: src/unstrip.c:263 src/unstrip.c:1944 src/unstrip.c:1987
 #, fuzzy, c-format
 msgid "cannot get number of program headers: %s"
 msgstr "no se pudo determinar la cantidad de encabezados de programa: %s"
 
-#: src/unstrip.c:267 src/unstrip.c:1947
+#: src/unstrip.c:268 src/unstrip.c:1948
 #, c-format
 msgid "cannot create program headers: %s"
 msgstr "No pueden crear encabezamientos de programa: %s"
 
-#: src/unstrip.c:273
+#: src/unstrip.c:274
 #, c-format
 msgid "cannot copy program header: %s"
 msgstr "no puede copiar encabezamiento de programa: %s"
 
-#: src/unstrip.c:283
+#: src/unstrip.c:284
 #, c-format
 msgid "cannot copy section header: %s"
 msgstr "no se puede copiar encabezamiento de sección: %s"
 
-#: src/unstrip.c:286 src/unstrip.c:1578
+#: src/unstrip.c:287 src/unstrip.c:1579
 #, c-format
 msgid "cannot get section data: %s"
 msgstr "no se pueden obtener datos de sección: %s"
 
-#: src/unstrip.c:288 src/unstrip.c:1580
+#: src/unstrip.c:289 src/unstrip.c:1581
 #, c-format
 msgid "cannot copy section data: %s"
 msgstr "no pueden copiar datos de sección: %s"
 
-#: src/unstrip.c:312
+#: src/unstrip.c:313
 #, c-format
 msgid "cannot create directory '%s'"
 msgstr "no se puede crear el directorio '%s'"
 
-#: src/unstrip.c:384 src/unstrip.c:804 src/unstrip.c:1612
+#: src/unstrip.c:385 src/unstrip.c:805 src/unstrip.c:1613
 #, c-format
 msgid "cannot get symbol table entry: %s"
 msgstr "no se puede obtener entrada de tabla de símbolos: %s"
 
-#: src/unstrip.c:400 src/unstrip.c:621 src/unstrip.c:642 src/unstrip.c:654
-#: src/unstrip.c:1633 src/unstrip.c:1809 src/unstrip.c:1833
+#: src/unstrip.c:401 src/unstrip.c:622 src/unstrip.c:643 src/unstrip.c:655
+#: src/unstrip.c:1634 src/unstrip.c:1810 src/unstrip.c:1834
 #, c-format
 msgid "cannot update symbol table: %s"
 msgstr "no se puede actualizar tabla de símbolos: %s"
 
-#: src/unstrip.c:410
+#: src/unstrip.c:411
 #, c-format
 msgid "cannot update section header: %s"
 msgstr "no se puede actualizar encabezamiento de sección: %s"
 
-#: src/unstrip.c:449 src/unstrip.c:460
+#: src/unstrip.c:450 src/unstrip.c:461
 #, c-format
 msgid "cannot update relocation: %s"
 msgstr "no se puede actualizar reubicación: %s"
 
-#: src/unstrip.c:548
+#: src/unstrip.c:549
 #, c-format
 msgid "cannot get symbol version: %s"
 msgstr "no se puede obtener versión de símbolo: %s"
 
-#: src/unstrip.c:561
+#: src/unstrip.c:562
 #, fuzzy, c-format
 msgid "unexpected section type in [%zu] with sh_link to symtab"
 msgstr "tipo de sección inesperado en [%Zu] con sh_link para symtab"
 
-#: src/unstrip.c:810
+#: src/unstrip.c:811
 #, fuzzy, c-format
 msgid "invalid string offset in symbol [%zu]"
 msgstr "compensación de cadena inválida en símbolo [%Zu]"
 
-#: src/unstrip.c:968 src/unstrip.c:1315
+#: src/unstrip.c:969 src/unstrip.c:1316
 #, fuzzy, c-format
 msgid "cannot read section [%zu] name: %s"
 msgstr "no se puede leer nombre [%Zu]: %s"
 
-#: src/unstrip.c:1009 src/unstrip.c:1028 src/unstrip.c:1063
+#: src/unstrip.c:1010 src/unstrip.c:1029 src/unstrip.c:1064
 #, c-format
 msgid "cannot read '.gnu.prelink_undo' section: %s"
 msgstr "no se puede leer sección '.gnu.prelink_undo': %s"
 
-#: src/unstrip.c:1049
+#: src/unstrip.c:1050
 #, c-format
 msgid "invalid contents in '%s' section"
 msgstr "contenido inválido en sección '%s'"
 
-#: src/unstrip.c:1055
+#: src/unstrip.c:1056
 #, c-format
 msgid "overflow with shnum = %zu in '%s' section"
 msgstr ""
 
-#: src/unstrip.c:1109 src/unstrip.c:1435
+#: src/unstrip.c:1110 src/unstrip.c:1436
 #, fuzzy, c-format
 msgid "cannot find matching section for [%zu] '%s'"
 msgstr "no se puede hallar sección coincidente para [%Zu] '%s'"
 
-#: src/unstrip.c:1234 src/unstrip.c:1249 src/unstrip.c:1516 src/unstrip.c:1768
+#: src/unstrip.c:1235 src/unstrip.c:1250 src/unstrip.c:1517 src/unstrip.c:1769
 #, c-format
 msgid "cannot add section name to string table: %s"
 msgstr "no se puede añadir nombre de sección a tabla de cadenas: %s"
 
-#: src/unstrip.c:1258
+#: src/unstrip.c:1259
 #, c-format
 msgid "cannot update section header string table data: %s"
 msgstr ""
 "no se pueden actualizar datos de tabla de cadenas de encabezamiento de "
 "sección: %s"
 
-#: src/unstrip.c:1286 src/unstrip.c:1290
+#: src/unstrip.c:1287 src/unstrip.c:1291
 #, c-format
 msgid "cannot get section header string table section index: %s"
 msgstr ""
 "no se puede obtener índice de sección de tabla de cadenas de encabezamiento "
 "de sección: %s"
 
-#: src/unstrip.c:1294 src/unstrip.c:1298 src/unstrip.c:1531
+#: src/unstrip.c:1295 src/unstrip.c:1299 src/unstrip.c:1532
 #, c-format
 msgid "cannot get section count: %s"
 msgstr "No se puede obtener cuenta de sección: %s"
 
-#: src/unstrip.c:1301
+#: src/unstrip.c:1302
 #, c-format
 msgid "more sections in stripped file than debug file -- arguments reversed?"
 msgstr ""
 "más secciones en el archivo despojado que en el archivo de depuración -- "
 "¿argumentos invertidos?"
 
-#: src/unstrip.c:1360 src/unstrip.c:1450
+#: src/unstrip.c:1361 src/unstrip.c:1451
 #, c-format
 msgid "cannot read section header string table: %s"
 msgstr "no se puede obtener tabla de cadenas de encabezamiento de sección: %s"
 
-#: src/unstrip.c:1510
+#: src/unstrip.c:1511
 #, c-format
 msgid "cannot add new section: %s"
 msgstr "No se puede añadir nueva sección: %s"
 
-#: src/unstrip.c:1620
+#: src/unstrip.c:1621
 #, fuzzy, c-format
 msgid "symbol [%zu] has invalid section index"
 msgstr "símbolo [%Zu] tiene índice de sección inválido"
 
-#: src/unstrip.c:1904
+#: src/unstrip.c:1905
 #, c-format
 msgid "cannot read section data: %s"
 msgstr "no se puede leer la sección de datos: %s"
 
-#: src/unstrip.c:1925
+#: src/unstrip.c:1926
 #, c-format
 msgid "cannot get ELF header: %s"
 msgstr "no se puede leer encabezamiento ELF: %s"
 
-#: src/unstrip.c:1933
+#: src/unstrip.c:1934
 #, c-format
 msgid "cannot update ELF header: %s"
 msgstr "No se puede actualizar encabezamiento ELF: %s"
 
-#: src/unstrip.c:1957
+#: src/unstrip.c:1958
 #, c-format
 msgid "cannot update program header: %s"
 msgstr "no se puede actualizar encabezamiento de programa: %s"
 
-#: src/unstrip.c:1962 src/unstrip.c:2044
+#: src/unstrip.c:1963 src/unstrip.c:2045
 #, c-format
 msgid "cannot write output file: %s"
 msgstr "no se puede escribir al archivo de salida: %s"
 
-#: src/unstrip.c:2013
+#: src/unstrip.c:2014
 #, c-format
 msgid "DWARF data not adjusted for prelinking bias; consider prelink -u"
 msgstr ""
 "datos DWARF no se ajustan para polarización de pre-enlace; considere prelink "
 "-u"
 
-#: src/unstrip.c:2016
+#: src/unstrip.c:2017
 #, c-format
 msgid ""
 "DWARF data in '%s' not adjusted for prelinking bias; consider prelink -u"
@@ -6553,77 +6553,77 @@ msgstr ""
 "Datos DWARF en '%s' no se ajustan a polarización de pre-enlace; considere "
 "prelink -u"
 
-#: src/unstrip.c:2035 src/unstrip.c:2086 src/unstrip.c:2098 src/unstrip.c:2184
+#: src/unstrip.c:2036 src/unstrip.c:2087 src/unstrip.c:2099 src/unstrip.c:2185
 #, c-format
 msgid "cannot create ELF descriptor: %s"
 msgstr "no se puede crear un descriptor ELF: %s"
 
-#: src/unstrip.c:2077
+#: src/unstrip.c:2078
 msgid "WARNING: "
 msgstr ""
 
-#: src/unstrip.c:2079
+#: src/unstrip.c:2080
 msgid ", use --force"
 msgstr ""
 
-#: src/unstrip.c:2102
+#: src/unstrip.c:2103
 msgid "ELF header identification (e_ident) different"
 msgstr ""
 
-#: src/unstrip.c:2105
+#: src/unstrip.c:2106
 msgid "ELF header type (e_type) different"
 msgstr ""
 
-#: src/unstrip.c:2108
+#: src/unstrip.c:2109
 msgid "ELF header machine type (e_machine) different"
 msgstr ""
 
-#: src/unstrip.c:2111
+#: src/unstrip.c:2112
 msgid "stripped program header (e_phnum) smaller than unstripped"
 msgstr ""
 
-#: src/unstrip.c:2141
+#: src/unstrip.c:2142
 #, c-format
 msgid "cannot find stripped file for module '%s': %s"
 msgstr "no se puede hallar archivo obtenido para módulo '%s': %s "
 
-#: src/unstrip.c:2145
+#: src/unstrip.c:2146
 #, c-format
 msgid "cannot open stripped file '%s' for module '%s': %s"
 msgstr "No se puede abrir el archivo '%s' obtenido para módulo '%s': %s"
 
-#: src/unstrip.c:2160
+#: src/unstrip.c:2161
 #, c-format
 msgid "cannot find debug file for module '%s': %s"
 msgstr "no puede hallar archivo de depuración para módulo '%s': %su"
 
-#: src/unstrip.c:2164
+#: src/unstrip.c:2165
 #, c-format
 msgid "cannot open debug file '%s' for module '%s': %s"
 msgstr "No puede abrir archivo de depuración '%s' para módulo '%s': %s"
 
-#: src/unstrip.c:2177
+#: src/unstrip.c:2178
 #, c-format
 msgid "module '%s' file '%s' is not stripped"
 msgstr "No se obtuvo el archivo '%s' de módulo '%s' "
 
-#: src/unstrip.c:2208
+#: src/unstrip.c:2209
 #, c-format
 msgid "cannot cache section addresses for module '%s': %s"
 msgstr ""
 "No puede almacenar en cache direcciones de sección para módulo '%s': %s"
 
-#: src/unstrip.c:2341
+#: src/unstrip.c:2342
 #, c-format
 msgid "no matching modules found"
 msgstr "No se encontraron módulos coincidentes"
 
-#: src/unstrip.c:2350
+#: src/unstrip.c:2351
 #, c-format
 msgid "matched more than one module"
 msgstr "coincidió con más de un módulo"
 
-#: src/unstrip.c:2394
+#: src/unstrip.c:2395
 msgid ""
 "STRIPPED-FILE DEBUG-FILE\n"
 "[MODULE...]"
@@ -6631,7 +6631,7 @@ msgstr ""
 "STRIPPED-FILE DEBUG-FILE\n"
 "[MODULE...]"
 
-#: src/unstrip.c:2395
+#: src/unstrip.c:2396
 msgid ""
 "Combine stripped files with separate symbols and debug information.\vThe "
 "first form puts the result in DEBUG-FILE if -o was not given.\n"

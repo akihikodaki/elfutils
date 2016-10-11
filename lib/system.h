@@ -29,9 +29,16 @@
 #ifndef LIB_SYSTEM_H
 #define LIB_SYSTEM_H	1
 
-#include <argp.h>
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+#ifdef ENABLE_TOOLS
+# include <argp.h>
+#endif
+#include <errno.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <sys/param.h>
 #include <endian.h>
 #include <byteswap.h>
 #include <unistd.h>
@@ -50,16 +57,14 @@
 # error "Unknown byte order"
 #endif
 
-extern void *xmalloc (size_t) __attribute__ ((__malloc__));
-extern void *xcalloc (size_t, size_t) __attribute__ ((__malloc__));
-extern void *xrealloc (void *, size_t) __attribute__ ((__malloc__));
+#ifndef MAX
+#define MAX(m, n) ((m) < (n) ? (n) : (m))
+#endif
 
-extern char *xstrdup (const char *) __attribute__ ((__malloc__));
-extern char *xstrndup (const char *, size_t) __attribute__ ((__malloc__));
+#ifndef MIN
+#define MIN(m, n) ((m) < (n) ? (m) : (n))
+#endif
 
-
-extern uint32_t crc32 (uint32_t crc, unsigned char *buf, size_t len);
-extern int crc32_file (int fd, uint32_t *resp);
 
 /* A special gettext function we use if the strings are too short.  */
 #define sgettext(Str) \
@@ -68,16 +73,34 @@ extern int crc32_file (int fd, uint32_t *resp);
 
 #define gettext_noop(Str) Str
 
+#ifndef TEMP_FAILURE_RETRY
+#define TEMP_FAILURE_RETRY(expression) \
+  ({ ssize_t __res; \
+     do \
+       __res = expression; \
+     while (__res == -1 && errno == EINTR); \
+     __res; });
+#endif
 
 static inline ssize_t __attribute__ ((unused))
 pwrite_retry (int fd, const void *buf, size_t len, off_t off)
 {
   ssize_t recvd = 0;
 
+#if !HAVE_DECL_PWRITE
+  off_t lseek_ret = lseek (fd, off, SEEK_SET);
+  if (lseek_ret < 0)
+    return lseek_ret;
+#endif
+
   do
     {
+#if HAVE_DECL_PWRITE
       ssize_t ret = TEMP_FAILURE_RETRY (pwrite (fd, buf + recvd, len - recvd,
 						off + recvd));
+#else
+      ssize_t ret = TEMP_FAILURE_RETRY (write (fd, buf + recvd, len - recvd));
+#endif
       if (ret <= 0)
 	return ret < 0 ? ret : recvd;
 
@@ -111,10 +134,20 @@ pread_retry (int fd, void *buf, size_t len, off_t off)
 {
   ssize_t recvd = 0;
 
+#if !HAVE_DECL_PREAD
+  off_t lseek_ret = lseek (fd, off, SEEK_SET);
+  if (lseek_ret < 0)
+    return lseek_ret;
+#endif
+
   do
     {
+#if HAVE_DECL_PREAD
       ssize_t ret = TEMP_FAILURE_RETRY (pread (fd, buf + recvd, len - recvd,
 					       off + recvd));
+#else
+      ssize_t ret = TEMP_FAILURE_RETRY (read (fd, buf + recvd, len - recvd));
+#endif
       if (ret <= 0)
 	return ret < 0 ? ret : recvd;
 
@@ -126,6 +159,7 @@ pread_retry (int fd, void *buf, size_t len, off_t off)
 }
 
 
+#ifdef ENABLE_TOOLS
 /* We need define two variables, argp_program_version_hook and
    argp_program_bug_address, in all programs.  argp.h declares these
    variables as non-const (which is correct in general).  But we can
@@ -136,44 +170,12 @@ pread_retry (int fd, void *buf, size_t len, off_t off)
    __asm ("argp_program_version_hook")
 #define ARGP_PROGRAM_BUG_ADDRESS_DEF \
   const char *const apba__ __asm ("argp_program_bug_address")
+#endif
 
 
 /* The demangler from libstdc++.  */
 extern char *__cxa_demangle (const char *mangled_name, char *output_buffer,
 			     size_t *length, int *status);
-
-
-
-/* Color handling.  */
-
-/* Command line parser.  */
-extern const struct argp color_argp;
-
-/* Coloring mode.  */
-enum color_enum
-  {
-    color_never = 0,
-    color_always,
-    color_auto
-  } __attribute__ ((packed));
-extern enum color_enum color_mode;
-
-/* Colors to use for the various components.  */
-extern char *color_address;
-extern char *color_bytes;
-extern char *color_mnemonic;
-extern char *color_operand1;
-extern char *color_operand2;
-extern char *color_operand3;
-extern char *color_label;
-extern char *color_undef;
-extern char *color_undef_tls;
-extern char *color_undef_weak;
-extern char *color_symbol;
-extern char *color_tls;
-extern char *color_weak;
-
-extern const char color_off[];
 
 /* A static assertion.  This will cause a compile-time error if EXPR,
    which must be a compile-time constant, is false.  */
