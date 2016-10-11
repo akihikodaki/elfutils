@@ -43,6 +43,7 @@
 #include <elf-knowledge.h>
 #include <libebl.h>
 #include "libdwelf.h"
+#include <libeu.h>
 #include <system.h>
 
 typedef uint8_t GElf_Byte;
