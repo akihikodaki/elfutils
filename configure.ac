@@ -44,7 +44,7 @@ AM_MAINTAINER_MODE
 
 AM_SILENT_RULES([yes])
 
-AC_CONFIG_SRCDIR([libelf/libelf.h])
+AC_CONFIG_SRCDIR([libelf/libelf.h.in])
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_HEADERS([config.h])
 
@@ -300,10 +300,11 @@ zip_LIBS="$LIBS"
 LIBS="$save_LIBS"
 AC_SUBST([zip_LIBS])
 
-AC_CHECK_DECLS([memrchr, rawmemchr],[],[],
-               [#define _GNU_SOURCE
-                #include <string.h>])
-AC_CHECK_DECLS([powerof2],[],[],[#include <sys/param.h>])
+AC_CHECK_DECLS([fchmod, memrchr, pread, pwrite, rawmemchr], [], [],
+	       [#define _GNU_SOURCE
+		#include <string.h>])
+AC_CHECK_DECLS(powerof2, , , [#include <sys/param.h>])
+AC_FUNC_MMAP
 
 AC_CHECK_LIB([stdc++], [__cxa_demangle], [dnl
 AC_DEFINE([USE_DEMANGLE], [1], [Defined if demangling is enabled])])
@@ -476,6 +477,26 @@ AH_TEMPLATE([ENABLE_ARGP], [Defined if argp is enabled.])
 if test "$libdw" = yes ; then
 	AC_DEFINE([ENABLE_ARGP])
 fi
+
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([dnl
+#include <sys/types.h>
+static uid_t x;
+])], uid_t=uid_t, uid_t=int32_t)
+AC_SUBST(UID_T, $uid_t)
+
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([dnl
+#include <sys/types.h>
+static gid_t x;
+])], gid_t=gid_t, gid_t=int32_t)
+AC_SUBST(GID_T, $gid_t)
+
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([dnl
+#include <sys/types.h>
+static mode_t x;
+])], mode_t=mode_t, mode_t=int32_t)
+AC_SUBST(MODE_T, $mode_t)
+
+AC_CONFIG_FILES([libelf/libelf.h])
 
 dnl Appended to the config.h file.
 dnl We hide all kinds of configuration magic in lib/eu-config.h.

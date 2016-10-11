@@ -34,7 +34,9 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include <sys/mman.h>
+#ifdef HAVE_MMAP
+# include <sys/mman.h>
+#endif
 
 #include "libelfP.h"
 
@@ -223,8 +225,10 @@ elf_end (Elf *elf)
       /* The file was read or mapped for this descriptor.  */
       if ((elf->flags & ELF_F_MALLOCED) != 0)
 	free (elf->map_address);
+#ifdef HAVE_MMAP
       else if ((elf->flags & ELF_F_MMAPPED) != 0)
 	munmap (elf->map_address, elf->maximum_size);
+#endif
     }
 
   rwlock_unlock (elf->lock);
