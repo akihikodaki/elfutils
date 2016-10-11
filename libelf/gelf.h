@@ -166,7 +166,7 @@ extern GElf_Ehdr *gelf_getehdr (Elf *__elf, GElf_Ehdr *__dest);
 extern int gelf_update_ehdr (Elf *__elf, GElf_Ehdr *__src);
 
 /* Create new ELF header if none exists.  */
-extern unsigned long int gelf_newehdr (Elf *__elf, int __class);
+extern void *gelf_newehdr (Elf *__elf, int __class);
 
 /* Get section at OFFSET.  */
 extern Elf_Scn *gelf_offscn (Elf *__elf, GElf_Off __offset);
@@ -184,7 +184,7 @@ extern GElf_Phdr *gelf_getphdr (Elf *__elf, int __ndx, GElf_Phdr *__dst);
 extern int gelf_update_phdr (Elf *__elf, int __ndx, GElf_Phdr *__src);
 
 /* Create new program header with PHNUM entries.  */
-extern unsigned long int gelf_newphdr (Elf *__elf, size_t __phnum);
+extern void *gelf_newphdr (Elf *__elf, size_t __phnum);
 
 /* Get compression header of section if any.  Returns NULL and sets
    elf_errno if the section isn't compressed or an error occurred.  */
