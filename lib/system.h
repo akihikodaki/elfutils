@@ -87,10 +87,20 @@ pwrite_retry (int fd, const void *buf, size_t len, off_t off)
 {
   ssize_t recvd = 0;
 
+#if !HAVE_DECL_PWRITE
+  off_t lseek_ret = lseek (fd, off, SEEK_SET);
+  if (lseek_ret < 0)
+    return lseek_ret;
+#endif
+
   do
     {
+#if HAVE_DECL_PWRITE
       ssize_t ret = TEMP_FAILURE_RETRY (pwrite (fd, buf + recvd, len - recvd,
 						off + recvd));
+#else
+      ssize_t ret = TEMP_FAILURE_RETRY (write (fd, buf + recvd, len - recvd));
+#endif
       if (ret <= 0)
 	return ret < 0 ? ret : recvd;
 
@@ -124,10 +134,20 @@ pread_retry (int fd, void *buf, size_t len, off_t off)
 {
   ssize_t recvd = 0;
 
+#if !HAVE_DECL_PREAD
+  off_t lseek_ret = lseek (fd, off, SEEK_SET);
+  if (lseek_ret < 0)
+    return lseek_ret;
+#endif
+
   do
     {
+#if HAVE_DECL_PREAD
       ssize_t ret = TEMP_FAILURE_RETRY (pread (fd, buf + recvd, len - recvd,
 					       off + recvd));
+#else
+      ssize_t ret = TEMP_FAILURE_RETRY (read (fd, buf + recvd, len - recvd));
+#endif
       if (ret <= 0)
 	return ret < 0 ? ret : recvd;
 
