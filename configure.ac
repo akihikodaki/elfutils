@@ -121,13 +121,24 @@ CFLAGS="$old_CFLAGS"])
 AS_IF([test "x$ac_cv_c99" != xyes],
       AC_MSG_ERROR([gcc with GNU99 support required]))
 
+AC_CACHE_CHECK([the output format of the linker is ELF], ac_cv_elf,[dnl
+case `$CC -Wl,-print-output-format -nodefaultlibs -nostartfiles` in
+ elf*) ac_cv_elf=yes ;;
+ *)   ac_cv_elf=no ;;
+esac])
+AM_CONDITIONAL(ELF, test "$ac_cv_elf" = yes)
+AS_IF(test "$ac_cv_elf" = yes, elf_val=0, elf_val=1)
+AC_SUBST(ELF, $elf_val)
+AH_TEMPLATE([ELF], [whether the output format of the linker is ELF])
+
 AC_CACHE_CHECK([for __thread support], ac_cv_tls, [dnl
 # Use the same flags that we use for our DSOs, so the test is representative.
 # Some old compiler/linker/libc combinations fail some ways and not others.
 save_CFLAGS="$CFLAGS"
 save_LDFLAGS="$LDFLAGS"
 CFLAGS="-fPIC $CFLAGS"
-LDFLAGS="-shared -Wl,-z,defs,-z,relro $LDFLAGS"
+LDFLAGS="-shared $LDFLAGS"
+AS_IF([test "$ac_cv_elf" = yes], [LDFLAGS="-Wl,-z,defs,-z,relro $LDFLAGS"])
 AC_LINK_IFELSE([dnl
 AC_LANG_PROGRAM([[#include <stdlib.h>
 #undef __thread
