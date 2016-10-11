@@ -46,6 +46,10 @@
 /* gettext helper macros.  */
 #define _(Str) dgettext ("elfutils", Str)
 
+#if !HAVE_DECL_POWEROF2
+#define powerof2(x) (((x) & ((x) - 1)) == 0)
+#endif
+
 
 /* Helper Macros to write 32 bit and 64 bit functions.  */
 #define __elfw2_(Bits, Name) __elf##Bits##_##Name

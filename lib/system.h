@@ -30,6 +30,7 @@
 #define LIB_SYSTEM_H	1
 
 #include <argp.h>
+#include <errno.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <sys/param.h>
@@ -67,6 +68,14 @@
 
 #define gettext_noop(Str) Str
 
+#ifndef TEMP_FAILURE_RETRY
+#define TEMP_FAILURE_RETRY(expression) \
+  ({ ssize_t __res; \
+     do \
+       __res = expression; \
+     while (__res == -1 && errno == EINTR); \
+     __res; });
+#endif
 
 static inline ssize_t __attribute__ ((unused))
 pwrite_retry (int fd, const void *buf, size_t len, off_t off)
