@@ -34,7 +34,7 @@ AM_CPPFLAGS += -I$(srcdir)/../libelf -I$(srcdir)/../libdw \
 	       -I$(srcdir)/../libdwfl -I$(srcdir)/../libebl
 VERSION = 1
 
-noinst_LIBRARIES = libdwelf.a libdwelf_pic.a
+noinst_LIBRARIES = libdwelf.a
 
 pkginclude_HEADERS = libdwelf.h
 noinst_HEADERS = libdwelfP.h
@@ -42,6 +42,9 @@ noinst_HEADERS = libdwelfP.h
 libdwelf_a_SOURCES = dwelf_elf_gnu_debuglink.c dwelf_dwarf_gnu_debugaltlink.c \
 		     dwelf_elf_gnu_build_id.c dwelf_scn_gnu_compressed_size.c \
 		     dwelf_strtab.c
+
+if BUILD_SHARED
+noinst_LIBRARIES += libdwelf_pic.a
 
 libdwelf = $(libdw)
 
@@ -54,3 +57,4 @@ libdwelf_pic_a_SOURCES =
 am_libdwelf_pic_a_OBJECTS = $(libdwelf_a_SOURCES:.c=.os)
 
 CLEANFILES += $(am_libdwelf_pic_a_OBJECTS)
+endif
