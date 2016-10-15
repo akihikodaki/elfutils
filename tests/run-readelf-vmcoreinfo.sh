@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfile62
 
 testrun_compare ${abs_top_builddir}/src/readelf -n testfile62 <<\EOF

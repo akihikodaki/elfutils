@@ -42,6 +42,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/strip || exit 77
+
 infile=testfile58
 outfile=$infile.stripped
 dbgfile=$infile.debug

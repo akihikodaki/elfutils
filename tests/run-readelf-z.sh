@@ -19,6 +19,8 @@
 
 # See run-elfgetchdr.sh for testfiles.
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfile-zgnu64
 testrun_compare ${abs_top_builddir}/src/readelf -z -S testfile-zgnu64 <<\EOF
 There are 9 section headers, starting at offset 0x3e0:

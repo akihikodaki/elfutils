@@ -24,6 +24,9 @@
 #  echo 'int ccc(void){} int ccc2(void){} int ccc3(void){}' \
 #    | gcc -x c /dev/stdin -c -o ccc.o
 #  ar cru testarchive64.a aaa.o bbb.o ccc.o
+
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testarchive64.a
 
 testrun_compare ${abs_top_builddir}/src/readelf -c testarchive64.a <<\EOF

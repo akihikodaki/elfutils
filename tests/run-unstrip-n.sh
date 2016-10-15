@@ -31,6 +31,8 @@
 # 
 # gcc -m32 -o rt_crash -lrt rt_crash.c
 
+test -f ${abs_top_builddir}/src/unstrip || exit 77
+
 testfiles testcore-rtlib testcore-rtlib-ppc
 
 testrun_compare ${abs_top_builddir}/src/unstrip -n --core=testcore-rtlib <<\EOF

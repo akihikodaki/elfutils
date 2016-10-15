@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/addr2line || exit 77
+
 testfiles testfile
 tempfiles good.out stdin.nl stdin.nl.out stdin.nonl stdin.nonl.out foo.out
 tempfiles addr2line.out

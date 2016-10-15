@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/nm || exit 77
+
 # Test different command line combinations on the nm binary itself.
 # Test on nm ET_REL, ET_EXEC and ET_DYN files.
 ET_REL=${abs_top_builddir}/src/nm.o

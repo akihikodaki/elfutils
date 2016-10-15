@@ -30,6 +30,8 @@
 # prelink -r 0x42000000 testfile52-32.noshdrs.so
 # eu-strip --remove-comment --strip-sections testfile52-32.noshdrs.so
 
+test -f ${abs_top_builddir}/src/addr2line || exit 77
+
 testfiles testfile52-32.so testfile52-32.so.debug
 testfiles testfile52-32.prelink.so testfile52-32.noshdrs.so
 tempfiles testmaps52-32 testfile52-32.noshdrs.so.debug

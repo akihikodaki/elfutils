@@ -19,6 +19,8 @@
 
 # See run-readelf-zdebug.sh for testfile.
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfile-zdebug
 testrun_compare ${abs_top_builddir}/src/readelf -z -p.zdebug_str testfile-zdebug <<\EOF
 

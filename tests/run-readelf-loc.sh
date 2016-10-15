@@ -56,6 +56,8 @@
 # gcc -g -O2 -c world.c
 # gcc -g -o testfileloc hello.o world.o
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfileloc
 
 # Process values as offsets from base addresses and resolve to symbols.

@@ -30,6 +30,8 @@
 # With ld --version
 # GNU gold (GNU Binutils 2.22.52.20120402) 1.11
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testlib_dynseg.so
 
 testrun_compare ${abs_top_builddir}/src/readelf -d testlib_dynseg.so <<\EOF

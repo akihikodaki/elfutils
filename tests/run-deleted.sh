@@ -17,6 +17,8 @@
 
 . $srcdir/backtrace-subr.sh
 
+test -f ${abs_top_builddir}/src/stack || exit 77
+
 tempfiles deleted deleted-lib.so
 cp -p ${abs_builddir}/deleted ${abs_builddir}/deleted-lib.so .
 

@@ -35,6 +35,7 @@ if test "$elfutils_testrun" = "installed"; then
 STACKCMD=${bindir}/`program_transform stack`
 else
 STACKCMD=${abs_top_builddir}/src/stack
+test -f "$STACKCMD" || exit 77
 fi
 
 # Disable valgrind while dumping because of a bug unmapping libc.so.

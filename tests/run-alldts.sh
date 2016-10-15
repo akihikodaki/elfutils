@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 tempfiles testfile-alldts
 
 # This will produce "testfile-alldts" file

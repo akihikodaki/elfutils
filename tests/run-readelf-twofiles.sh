@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfile14
 
 testrun >/dev/null ${abs_top_builddir}/src/readelf -w testfile14 testfile14

@@ -57,6 +57,8 @@
 # gcc -g3 -c world.c
 # gcc -g3 -o testfilemacro hello.o world.o
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfilemacro
 
 testrun_compare ${abs_top_builddir}/src/readelf --debug-dump=macro testfilemacro <<\EOF

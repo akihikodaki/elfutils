@@ -18,6 +18,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/elflint || exit 77
+
 testfiles testfile18
 
 testrun_compare ${abs_top_builddir}/src/elflint --gnu-ld testfile18 <<\EOF

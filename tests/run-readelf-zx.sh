@@ -19,6 +19,8 @@
 
 # See run-elfgetchdr.sh for testfiles.
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfile-zgnu64
 testrun_compare ${abs_top_builddir}/src/readelf -z -x.zdebug_aranges testfile-zgnu64 <<\EOF
 

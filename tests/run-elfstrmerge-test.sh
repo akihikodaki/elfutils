@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/elflint || exit 77
+
 # Merge string tables of file and check result with elflint.
 testrun_elfcompress()
 {

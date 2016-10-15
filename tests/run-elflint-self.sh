@@ -18,4 +18,6 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/elflint || exit 77
+
 testrun_on_self ${abs_top_builddir}/src/elflint --quiet --gnu-ld

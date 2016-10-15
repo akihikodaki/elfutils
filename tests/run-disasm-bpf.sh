@@ -59,5 +59,7 @@
 #
 # Then emacs hexl edit e_machine to 0xf7.
 
+test -f ${abs_top_builddir}/src/objdump || exit 77
+
 testfiles testfile-bpf-dis1.o testfile-bpf-dis1.expect
 testrun_compare ${abs_top_builddir}/src/objdump -d testfile-bpf-dis1.o < testfile-bpf-dis1.expect

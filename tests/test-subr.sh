@@ -131,7 +131,8 @@ testrun_on_self()
   exit_status=0
 
   for file in $self_test_files; do
-      testrun $* $file \
+      test ! -f $file \
+          || testrun $* $file \
 	  || { echo "*** failure in $* $file"; exit_status=1; }
   done
 

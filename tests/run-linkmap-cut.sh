@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/stack || exit 77
+
 # The core file has patched:
 # * _r_debug.r_map.l_next.l_next (vma 0x3fdf621718, offset 0x7718) = NULL,
 #   therefore all libraries after the main executable and vDSO are removed.

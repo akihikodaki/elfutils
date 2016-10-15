@@ -18,6 +18,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 original=${original:-testfile11}
 stripped=${stripped:-testfile7}
 debugout=${debugfile:+-f testfile.debug.temp -F $debugfile}

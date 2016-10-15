@@ -18,6 +18,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/ranlib || exit 77
+
 original=${original:-testfile19}
 indexed=${indexed:-testfile19.index}
 

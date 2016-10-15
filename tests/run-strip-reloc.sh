@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/strip || exit 77
+
 testfiles hello_i386.ko hello_x86_64.ko hello_ppc64.ko hello_s390.ko \
 	hello_aarch64.ko hello_m68k.ko
 

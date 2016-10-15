@@ -18,6 +18,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/strings || exit 77
+
 files="testfile `seq 2 9 | while read n; do echo testfile$n; done`"
 testfiles $files
 

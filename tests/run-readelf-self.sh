@@ -17,5 +17,7 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 # Just makes sure readelf doesn't crash
 testrun_on_self_quiet ${abs_top_builddir}/src/readelf -a -w

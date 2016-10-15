@@ -75,6 +75,8 @@
 # cp testfile-dwzstr testfile-dwzstr.alt
 # dwz -m testfile-dwzstr.multi testfile-dwzstr testfile-dwzstr.alt
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles libtestfile_multi_shared.so testfile_multi_main testfile_multi.dwz
 testfiles testfile-dwzstr testfile-dwzstr.multi
 

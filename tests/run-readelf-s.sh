@@ -111,6 +111,7 @@
 # objcopy --add-section .gnu_debugdata=mini_debuginfo.xz bax
 # objcopy --remove-section=.gnu_debuglink bax testfilebaxmin
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
 
 testfiles testfilebaztab
 testfiles testfilebazdbg testfilebazdbg.debug

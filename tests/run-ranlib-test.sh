@@ -18,6 +18,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/ranlib || exit 77
+
 tempfiles ranlib-test.a ranlib-test.a-copy
 
 cat > ranlib-test.a <<"EOF"

@@ -139,7 +139,11 @@ main (void)
     }
 
   if (result == 0)
-    result = WEXITSTATUS (system ("../src/elflint -q asm-tst6-out.o"));
+    {
+      result = WEXITSTATUS (system ("../src/elflint -q asm-tst6-out.o"));
+      if (result == 127)
+	result = 77;
+    }
 
   /* We don't need the file anymore.  */
   unlink (fname);

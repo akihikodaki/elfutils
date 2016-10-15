@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/addr2line || exit 77
+
 testfiles testfile34 testfile38 testfile41 testfile49
 
 testrun_compare ${abs_top_builddir}/src/addr2line -f -e testfile34 \

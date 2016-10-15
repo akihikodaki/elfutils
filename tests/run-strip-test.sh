@@ -22,6 +22,8 @@ original=${original:-testfile11}
 stripped=${stripped:-testfile7}
 debugout=${debugfile:+-f testfile.debug.temp -F $debugfile}
 
+test -f ${abs_top_builddir}/src/strip || exit 77
+
 testfiles $original
 test x$stripped = xtestfile.temp || testfiles $stripped $debugfile
 

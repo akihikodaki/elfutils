@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/unstrip || exit 77
+
 # Linux /proc/PID/maps file with some non-file entries (and fake exe/lib names).
 tempfiles testmaps
 cat > testmaps <<EOF

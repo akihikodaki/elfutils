@@ -41,6 +41,8 @@
 # gcc -Og -g -Xassembler --compress-debug-sections=zlib-gabi \
 #     -c -o testfile-debug-rel-z.o testfile-zdebug-rel.c
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfile-debug-rel.o testfile-debug-rel-g.o testfile-debug-rel-z.o
 tempfiles readelf.out
 tempfiles info.out loc.out

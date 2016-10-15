@@ -39,6 +39,8 @@
 # gcc -g3 -O3 -fuse-ld=gold -Xlinker --compress-debug-sections=zlib \
 #     -fno-asynchronous-unwind-tables -o testfile-zdebug testfile-zdebug.c
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfile-debug testfile-zdebug
 tempfiles readelf.out
 tempfiles loc.out aranges.out ranges.out macro.out line.out frame.out

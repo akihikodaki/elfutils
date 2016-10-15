@@ -30,6 +30,8 @@
 # gcc -gdwarf-4 -g3 -o testfile-macros macro.c
 # gcc -gstrict-dwarf -gdwarf-4 -g3 -o testfile-macinfo macro.c
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfile-macinfo testfile-macros
 tempfiles readelf.macros.out
 

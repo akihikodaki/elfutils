@@ -20,6 +20,8 @@
 # Tests readelf --debug-dump=line and --debug-dump=decodedline
 # See run-readelf-aranges for testfiles.
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfilefoobarbaz
 
 testrun_compare ${abs_top_builddir}/src/readelf --debug-dump=line testfilefoobarbaz <<EOF

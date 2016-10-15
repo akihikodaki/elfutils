@@ -52,6 +52,8 @@
 #   foobar();
 # }
 
+test -f ${abs_top_builddir}/src/addr2line || exit 77
+
 testfiles testfile-inlines
 
 testrun_compare ${abs_top_builddir}/src/addr2line -i -e testfile-inlines 0x00000000000005a0 <<\EOF

@@ -109,6 +109,8 @@
 # gcc -g -O2 -m32 -c foo.c
 # gcc -g -O2 -m32 -o testfilefoobarbaz foo.o bar.o baz.o
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfilefoobarbaz
 
 testrun_compare ${abs_top_builddir}/src/readelf --debug-dump=aranges testfilefoobarbaz <<EOF

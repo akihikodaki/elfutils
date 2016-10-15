@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/objdump || exit 77
+
 # Run x86-64 test.
 case "`uname -m`" in
   x86_64)

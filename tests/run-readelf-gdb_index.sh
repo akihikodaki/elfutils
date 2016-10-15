@@ -63,6 +63,8 @@
 # (gdb) save gdb-index .
 # objcopy --add-section .gdb_index=testfilegdbindex7.gdb-index --set-section-flags .gdb_index=readonly testfilegdbindex7 testfilegdbindex7
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfilegdbindex5 testfilegdbindex7
 
 testrun_compare ${abs_top_builddir}/src/readelf --debug-dump=gdb_index testfilegdbindex5 <<\EOF

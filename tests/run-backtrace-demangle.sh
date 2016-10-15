@@ -22,6 +22,8 @@ fi
 
 . $srcdir/backtrace-subr.sh
 
+test -f ${abs_top_builddir}/src/stack || exit 77
+
 child=testfile-backtrace-demangle
 testfiles $child{,.core}
 tempfiles $child.{bt,err}

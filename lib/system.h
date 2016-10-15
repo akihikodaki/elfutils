@@ -29,7 +29,13 @@
 #ifndef LIB_SYSTEM_H
 #define LIB_SYSTEM_H	1
 
-#include <argp.h>
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+#ifdef ENABLE_ARGP
+# include <argp.h>
+#endif
+#include <errno.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <endian.h>
@@ -126,6 +132,7 @@ pread_retry (int fd, void *buf, size_t len, off_t off)
 }
 
 
+#ifdef ENABLE_TOOLS
 /* We need define two variables, argp_program_version_hook and
    argp_program_bug_address, in all programs.  argp.h declares these
    variables as non-const (which is correct in general).  But we can
@@ -136,6 +143,7 @@ pread_retry (int fd, void *buf, size_t len, off_t off)
    __asm ("argp_program_version_hook")
 #define ARGP_PROGRAM_BUG_ADDRESS_DEF \
   const char *const apba__ __asm ("argp_program_bug_address")
+#endif
 
 
 /* The demangler from libstdc++.  */

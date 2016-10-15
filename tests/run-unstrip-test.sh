@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/unstrip || exit 77
+
 original=${original:-testfile12}
 stripped=${stripped:-testfile17}
 debugfile=${debugfile:-${stripped}.debug}

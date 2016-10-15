@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/elflint || exit 77
+
 # Generate a file with merged .shstrtab/.strtab table.
 # strip and unstrip it. Check all files with elflint.
 

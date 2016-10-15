@@ -32,6 +32,8 @@
 #   }
 # }
 
+test -f ${abs_top_builddir}/src/addr2line || exit 77
+
 testfiles testfile-lex-inlines
 
 testrun_compare ${abs_top_builddir}/src/addr2line -i -e testfile-lex-inlines 0x0000000000000680 <<\EOF

@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/strip || exit 77
+
 # See run-addr2line-i-test.sh
 testfiles testfile-inlines
 

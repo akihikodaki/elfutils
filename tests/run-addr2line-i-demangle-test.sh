@@ -22,6 +22,8 @@ fi
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/addr2line || exit 77
+
 # See run-addr2line-i-test.sh for how to generate test files.
 testfiles testfile-inlines
 

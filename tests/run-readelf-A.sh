@@ -32,6 +32,8 @@
 #
 # gcc -c testfilesparc64attrs.s
 
+test -f ${abs_top_builddir}/src/readelf || exit 77
+
 testfiles testfilearm testfileppc32attrs.o testfilesparc64attrs.o
 
 testrun_compare ${abs_top_builddir}/src/readelf -A testfilearm <<\EOF

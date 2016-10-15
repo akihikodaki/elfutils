@@ -17,6 +17,8 @@
 
 . $srcdir/test-subr.sh
 
+test -f ${abs_top_builddir}/src/elfcompress || exit 77
+
 # uncompress -> gnucompress -> uncompress -> elfcompress -> uncompress
 testrun_elfcompress_file()
 {
