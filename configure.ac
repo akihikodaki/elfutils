@@ -225,6 +225,38 @@ AS_HELP_STRING([--enable-tests-rpath],[build $ORIGIN-using rpath into tests]),
 	       [tests_use_rpath=$enableval], [tests_use_rpath=no])
 AM_CONDITIONAL(TESTS_RPATH, test "$tests_use_rpath" = yes)
 
+AC_ARG_ENABLE([tools],
+AS_HELP_STRING([--disable-tools], [do not build tools]),
+	       [tools=$enableval], [tools=yes])
+
+AC_ARG_ENABLE([libasm],
+AS_HELP_STRING([--disable-libasm], [do not build libasm]),
+	       [libasm=$enableval], [libasm=yes])
+
+AC_ARG_ENABLE([libdw],
+AS_HELP_STRING([--disable-libdw], [do not build libdw]),
+	       [libdw=$enableval], [libdw=yes])
+
+AC_ARG_ENABLE([libebl],
+AS_HELP_STRING([--disable-libebl], [do not build libebl]),
+	       [libebl=$enableval], [libebl=yes])
+
+AC_ARG_ENABLE([libelf],
+AS_HELP_STRING([--disable-libelf], [do not build libelf]),
+	       [libelf=$enableval], [libelf=yes])
+
+AS_IF([test "$libasm" = yes -a "$libdw$libebl" != yesyes],
+      [AC_MSG_ERROR([libasm requires libdw and libebl])])
+
+AS_IF([test "$libdw" = yes -a "$libebl$libelf" != yesyes],
+      [AC_MSG_ERROR([libdw requires libebl and libelf])])
+
+AS_IF([test "$libebl" = yes -a "$libdw$libelf" != yesyes],
+      [AC_MSG_ERROR([libebl requires libdw and libelf])])
+
+AS_IF([test "$tools" = yes -a "$libasm$libdw$libelf$libebl" != yesyesyesyes],
+      [AC_MSG_ERROR([tools requires libasm, libdw, libelf, and libebl])])
+
 LIBEBL_SUBDIR="$PACKAGE"
 AC_ARG_ENABLE([libebl-subdir],
 AS_HELP_STRING([--enable-libebl-subdir=DIR],
@@ -322,30 +354,32 @@ CFLAGS="$old_CFLAGS"])
 AM_CONDITIONAL(HAVE_NULL_DEREFERENCE_WARNING,
 	       [test "x$ac_cv_null_dereference" != "xno"])
 
-dnl Check if we have argp available from our libc
-AC_LINK_IFELSE(
-	[AC_LANG_PROGRAM(
-		[#include <argp.h>],
-		[int argc=1; char *argv[]={"test"}; argp_parse(0,argc,&argv,0,0,0); return 0;]
-		)],
-	[libc_has_argp="true"],
-	[libc_has_argp="false"]
-)
+if test "$libdw" = yes ; then
+	dnl Check if we have argp available from our libc
+	AC_LINK_IFELSE(
+		[AC_LANG_PROGRAM(
+			[#include <argp.h>],
+			[int argc=1; char *argv[]={"test"}; argp_parse(0,argc,&argv,0,0,0); return 0;]
+			)],
+		[libc_has_argp="true"],
+		[libc_has_argp="false"]
+	)
 
-dnl If our libc doesn't provide argp, then test for libargp
-if test "$libc_has_argp" = "false" ; then
-	AC_MSG_WARN("libc does not have argp")
-	AC_CHECK_LIB([argp], [argp_parse], [have_argp="true"], [have_argp="false"])
+	dnl If our libc doesn't provide argp, then test for libargp
+	if test "$libc_has_argp" = "false" ; then
+		AC_MSG_WARN("libc does not have argp")
+		AC_CHECK_LIB([argp], [argp_parse], [have_argp="true"], [have_argp="false"])
 
-	if test "$have_argp" = "false"; then
-		AC_MSG_ERROR("no libargp found")
+		if test "$have_argp" = "false"; then
+			AC_MSG_ERROR("no libargp found")
+		else
+			argp_LDADD="-largp"
+		fi
 	else
-		argp_LDADD="-largp"
+		argp_LDADD=""
 	fi
-else
-	argp_LDADD=""
+	AC_SUBST([argp_LDADD])
 fi
-AC_SUBST([argp_LDADD])
 
 dnl Check if we have <linux/bpf.h> for EM_BPF disassembly.
 AC_CHECK_HEADERS(linux/bpf.h)
@@ -358,35 +392,61 @@ dnl Commented out for now.
 dnl AC_CONFIG_FILES([doc/Makefile])
 
 dnl Support library.
-AC_CONFIG_FILES([lib/Makefile])
+AM_CONDITIONAL(HAVE_LIBEU, test "$libdw" = yes -o "$libebl" = yes)
+if test "$libdw" = yes -o "$libebl" = yes ; then
+	AC_CONFIG_FILES([lib/Makefile])
+fi
 
 dnl ELF library.
+AM_CONDITIONAL(HAVE_LIBELF, test "$libelf" = yes)
 AC_CONFIG_FILES([libelf/Makefile])
 
 dnl Higher-level ELF support library.
-AC_CONFIG_FILES([libebl/Makefile])
+AM_CONDITIONAL(HAVE_LIBEBL, test "$libebl" = yes)
+if test "$libebl" = yes ; then
+	AC_CONFIG_FILES([libebl/Makefile])
+fi
+
+AM_CONDITIONAL(HAVE_LIBDW, test "$libdw" = yes)
 
 dnl DWARF-ELF Lower-level Functions support library.
-AC_CONFIG_FILES([libdwelf/Makefile])
+if test "$libdw" = yes; then
+	AC_CONFIG_FILES([libdwelf/Makefile])
+fi
 
 dnl DWARF library.
-AC_CONFIG_FILES([libdw/Makefile])
+if test "$libdw" = yes; then
+	AC_CONFIG_FILES([libdw/Makefile])
+fi
 
 dnl Higher-level DWARF support library.
-AC_CONFIG_FILES([libdwfl/Makefile])
+if test "$libdw" = yes; then
+	AC_CONFIG_FILES([libdwfl/Makefile])
+fi
 
 dnl CPU handling library.
-AC_CONFIG_FILES([libcpu/Makefile])
+if test "$libebl" = yes; then
+	AC_CONFIG_FILES([libcpu/Makefile])
+fi
 
 dnl Assembler library.
-AM_CONDITIONAL(HAVE_LIBASM, true)dnl Used in tests/Makefile.am, which see.
-AC_CONFIG_FILES([libasm/Makefile])
+AM_CONDITIONAL(HAVE_LIBASM, test "$libasm" = yes)dnl Used in tests/Makefile.am, which see.
+if test "$libasm" = yes; then
+	AC_CONFIG_FILES([libasm/Makefile])
+fi
 
 dnl CPU-specific backend libraries.
-AC_CONFIG_FILES([backends/Makefile])
+if test "$libebl" = yes; then
+	AC_CONFIG_FILES([backends/Makefile])
+fi
 
 dnl Tools.
-AC_CONFIG_FILES([src/Makefile po/Makefile.in])
+AM_CONDITIONAL(HAVE_TOOLS, test "$tools" = yes)
+if test "$tools" = yes ; then
+	AC_CONFIG_FILES([src/Makefile])
+fi
+
+AC_CONFIG_FILES([po/Makefile.in])
 
 dnl Test suite.
 AM_CONDITIONAL(STANDALONE, false)dnl Used in tests/Makefile.am, which see.
@@ -399,6 +459,11 @@ AC_CONFIG_FILES([config/libelf.pc config/libdw.pc])
 # subdirectories.  This is a small subset of the gettext rules.
 AC_SUBST(USE_NLS, yes)
 AM_PO_SUBDIRS
+
+AH_TEMPLATE([ENABLE_ARGP], [Defined if argp is enabled.])
+if test "$libdw" = yes ; then
+	AC_DEFINE([ENABLE_ARGP])
+fi
 
 dnl Appended to the config.h file.
 dnl We hide all kinds of configuration magic in lib/eu-config.h.

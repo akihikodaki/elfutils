@@ -27,8 +27,8 @@ testfiles testfile_low_high_pc
 
 testrun ${abs_builddir}/low_high_pc -e ./testfile_low_high_pc
 testrun ${abs_builddir}/low_high_pc -e ${abs_builddir}/low_high_pc
-testrun ${abs_builddir}/low_high_pc -e ${abs_top_builddir}/src/strip
-testrun ${abs_builddir}/low_high_pc -e ${abs_top_builddir}/src/strip.o
+test -f ${abs_top_builddir}/src/strip && testrun ${abs_builddir}/low_high_pc -e ${abs_top_builddir}/src/strip
+test -f ${abs_top_builddir}/src/strip.o && testrun ${abs_builddir}/low_high_pc -e ${abs_top_builddir}/src/strip.o
 testrun ${abs_builddir}/low_high_pc -e ${abs_top_builddir}/libelf/libelf.so
 
 exit 0
