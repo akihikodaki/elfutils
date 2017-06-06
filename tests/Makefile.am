@@ -36,7 +36,7 @@ else
 tests_rpath = no
 endif
 
-check_PROGRAMS =  early-offscn test-elf_cntl_gelf_getshdr deleted deleted-lib.so
+check_PROGRAMS =  early-offscn test-elf_cntl_gelf_getshdr
 
 asm_TESTS = asm-tst1 asm-tst2 asm-tst3 asm-tst4 asm-tst5 \
 	    asm-tst6 asm-tst7 asm-tst8 asm-tst9
@@ -125,7 +125,7 @@ tools_TESTRUNNERS = run-strip-test.sh run-strip-test2.sh \
 		    run-addr2line-alt-debugpath.sh \
 		    run-stack-d-test.sh run-stack-i-test.sh \
 		    run-stack-demangled-test.sh run-readelf-zx.sh \
-		    run-readelf-zp.sh run-readelf-dwz-multi.sh run-deleted.sh \
+		    run-readelf-zp.sh run-readelf-dwz-multi.sh \
 		    run-linkmap-cut.sh run-readelf-A.sh run-compress-test.sh \
 		    run-readelf-zdebug.sh run-readelf-zdebug-rel.sh
 
@@ -145,6 +145,11 @@ TESTS = run-early-offscn.sh run-elf_cntl_gelf_getshdr.sh run-lfs-symbols.sh
 
 if !BIARCH
 export ELFUTILS_DISABLE_BIARCH = 1
+endif
+
+if BUILD_SHARED
+check_PROGRAMS += deleted deleted-lib.so
+TESTS += run-deleted.sh
 endif
 
 if !DEMANGLE
